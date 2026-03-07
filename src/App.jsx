@@ -5,6 +5,8 @@ import  Sidebar  from "./components/SideBar";
 import  NavBar  from "./components/NavBar";
 import Footer  from "./components/Footer";
 import Board from "./components/Board";
+import DraggablePanel from "./components/Draggable";
+
 import "./App.css";
 function App() {
   //state variavel que atualiza a tela quando é alterado, ou seja
@@ -13,10 +15,9 @@ function App() {
   // components funcionam como literalmente como funcoes misturados
   // html se nao retornar nada ele nao aparece
   const [tasks, setTasks] = useState( JSON.parse(localStorage.getItem("tasks"))||[
-        
 
-    
   ]);
+  <> </>
   //armazenando no local storage
   useEffect(()=>{
     console.log("task alterado")
@@ -37,15 +38,18 @@ function App() {
     const newTask = tasks.filter((tasks) => tasks.id !== tasksId);
     setTasks(newTask);
   }
-  function onTaskSubmit(titulo, description) {
+  function onTaskSubmit(titulo,date, description) {
    //Validação dos campos
     if(titulo.trim()==('')|| description.trim()==('')){return alert("Digite nos campos indicados")}
    
-    //tratamento das informações
+    //tratamento das informações 
+    // lembrar de criar uma aba de comentarios
     const newTask = {
       id: tasks.length + 1,
       titulo: titulo,
       description: description,
+      date: date,
+      
       isCompleted: false,
     };
     setTasks([...tasks, newTask]);
@@ -57,7 +61,7 @@ function App() {
       <Sidebar/>
       <div className="main-conteiner"> {/* Classe adicionada */}
         <div className="main-board"> {/* Classe adicionada para limitar largura */}
-          <h1>Gerenciador de tarefas</h1>
+          <h1>Inbox</h1>
           <AddTasks onTaskSubmit={onTaskSubmit} />
           <Tasks
             tasks={tasks}
@@ -65,6 +69,10 @@ function App() {
             deleteOnClick={deleteOnClick}
           />
         </div>
+        <DraggablePanel>
+  <p>Este painel pode ser arrastado</p>
+  <button>Ok</button>
+</DraggablePanel>
         <div className="main-content"><Board /></div>
       </div>
     </div>

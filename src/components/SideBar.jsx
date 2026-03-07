@@ -5,6 +5,7 @@ function SideBar ({onTaskSubmit}){
 <div className="sidebar">
 <button>Home</button>
 <button>Quadros</button>
+<button>Membros</button>
 <button>Configurações</button>
 
 
