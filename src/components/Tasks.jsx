@@ -1,40 +1,40 @@
-import { ChevronRightIcon, Trash2Icon, TrashIcon } from "lucide-react";
+import { ChevronRightIcon, Trash2Icon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function Tasks(props) {
-  //Lembrar que toda funcao em jsx tem quando inserida no "HTML"  tem que estar em  {}
-const navigate =useNavigate();
-//bom habito para nao truncar parametros pois sao passados pela url
-const query =new URLSearchParams();
-function onSeeDetailsClick(tasks){
-   query.set("titulo",tasks.titulo);
-   query.set("description",tasks.description);
-   navigate(`/tasks?${query.toString()}`);
-}
-  //aqui a gente criou uma funcao no componente pai e passa ela como prop parar o componente filho
-  //para conseguir alterar a partir do filho o pai
-  
+  const navigate = useNavigate();
+  const query = new URLSearchParams();
+
+  function onSeeDetailsClick(task) {
+    query.set("titulo", task.titulo);
+    query.set("description", task.description);
+    navigate(`/tasks?${query.toString()}`);
+  }
+
   return (
-    <ul className="tasks">
-      {props.tasks.map((tasks) => (
-        <div  className="task-card">
-        <li key={tasks.id}>
+    <section className="tasks">
+      {props.tasks.map((task) => (
+        <div key={task.id} className="task-cardd">
+
           <button
-            onClick={() => props.onTaskClick(tasks.id)}
-            className={tasks.isCompleted ? "completed" : ""}
+            onClick={() => props.onTaskClick(task.id)}
+            className={task.isCompleted ? "completed" : ""}
           >
-            {tasks.titulo}
+            {task.titulo}
           </button>
-          <button onClick={()=>onSeeDetailsClick(tasks)}>
+
+          <button onClick={() => onSeeDetailsClick(task)}>
             <ChevronRightIcon />
           </button>
-          <button onClick={() => props.deleteOnClick (tasks.id)}>
+
+          <button onClick={() => props.deleteOnClick(task.id)}>
             <Trash2Icon />
           </button>
-        </li>
+
         </div>
       ))}
-    </ul>
+    </section>
   );
 }
+
 export default Tasks;
