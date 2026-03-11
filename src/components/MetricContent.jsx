@@ -3,15 +3,15 @@ function MetricContent() {
     <>
       <div className="board">
         <div className="metricContent">
-           <img className="" src="./public/image/warning.png" alt="Tarefas atrasadas" srcset="" />
+           <img className="" src="/image/warning.png" alt="Tarefas atrasadas" srcset="" />
           <h3>Tarefas atrasadas</h3>
         </div>
         <div className="metricContent">
-            <img className="imgSmall" src="./public/image/calendar.png" alt="Tarefas agendadas" srcset="" />
+            <img className="imgSmall" src="/image/calendar.png" alt="Tarefas agendadas" srcset="" />
           <h3>Conclusão Prevista</h3>
         </div>
         <div className="metricContent">
-            <img className="imgSmall" src="./public/image/wifi.png" alt="Produtividade" srcset="" />
+            <img className="imgSmall" src="/image/wifi.png" alt="Produtividade" srcset="" />
           <h3>Indice de produtividade</h3>
         </div>
       </div>
