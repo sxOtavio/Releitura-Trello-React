@@ -14,7 +14,7 @@ function Tasks(props) {
   return (
     <section className="tasks">
       {props.tasks.map((task) => (
-        <div key={task.id} className="task-cardd">
+        <div key={task.id} className="task-card">
 
           <button
             onClick={() => props.onTaskClick(task.id)}

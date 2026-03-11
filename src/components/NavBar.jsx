@@ -4,9 +4,9 @@ function NavBar ({onTaskSubmit}){
     return(
 <div className="navbar">
 <button>Home</button>
-<button>Scrum</button>
 <button>Quadros</button>
-
+<button>Membros</button>
+<button>Configurações</button>
 
 
 </div>

@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
 import AddTasks from "./components/AddTasks";
-import Tasks from "./components/Tasks";
-import Sidebar from "./components/SideBar";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Board from "./components/Board";
-import DraggablePanel from "./components/Draggable";
 import DraggableTask from "./components/DraggableTask";
-
+import GraphicContent from "./components/BeLateChart";
+import MetricContent from "./components/MetricContent";
+import ProductivityBarChart from "./components/ProductivityBarChart"
 import "./App.css";
 function App() {
+  const data = [
+    { day: "Seg", tasks: 2 },
+    { day: "Ter", tasks: 7 },
+    { day: "Qua", tasks: 3 },
+    { day: "Qui", tasks: 8 },
+    { day: "Sex", tasks: 5 },
+  ];
+  
   //state variavel que atualiza a tela quando é alterado, ou seja
   //quando a funcao rodar ele vai atualizar a pagina e mostrar os
   //novos valores
@@ -37,24 +44,35 @@ function App() {
   }, [columns]);
 
   function moveTask(taskId, targetColumnId, sourceColumnId = null) {
+    console.log("moveTask called:", { taskId, targetColumnId, sourceColumnId });
     if (sourceColumnId === null) {
       // From tasks to column
       const task = tasks.find((t) => t.id === taskId);
-      if (!task) return;
+      if (!task) {
+        console.log("Task not found in tasks:", taskId);
+        return;
+      }
       setTasks((prev) => prev.filter((t) => t.id !== taskId));
       setColumns((prev) =>
         prev.map((col) =>
           col.id === targetColumnId
             ? { ...col, tasks: [...col.tasks, task] }
-            : col
-        )
+            : col,
+        ),
       );
     } else {
       // From column to column
       setColumns((prev) => {
         const sourceCol = prev.find((col) => col.id === sourceColumnId);
         const task = sourceCol?.tasks.find((t) => t.id === taskId);
-        if (!task) return prev;
+        if (!task) {
+          console.log(
+            "Task not found in source column:",
+            taskId,
+            sourceColumnId,
+          );
+          return prev;
+        }
         return prev.map((col) => {
           if (col.id === sourceColumnId) {
             return { ...col, tasks: col.tasks.filter((t) => t.id !== taskId) };
@@ -71,8 +89,10 @@ function App() {
   function deleteTaskFromColumn(taskId, columnId) {
     setColumns((prev) =>
       prev.map((col) =>
-        col.id === columnId ? { ...col, tasks: col.tasks.filter((t) => t.id !== taskId) } : col
-      )
+        col.id === columnId
+          ? { ...col, tasks: col.tasks.filter((t) => t.id !== taskId) }
+          : col,
+      ),
     );
   }
 
@@ -112,7 +132,6 @@ function App() {
     <div>
       <NavBar />
       <div className="container">
-        <Sidebar />
         <div className="main-conteiner">
           {" "}
           {/* Classe adicionada */}
@@ -121,7 +140,6 @@ function App() {
             {/* Classe adicionada para limitar largura */}
             <h1>Inbox</h1>
             <AddTasks onTaskSubmit={onTaskSubmit} />
-        
             <DraggableTask
               tasks={tasks}
               onTaskClick={onTaskClick}
@@ -129,7 +147,17 @@ function App() {
             />
           </div>
           <div className="main-content">
-            <Board columns={columns} onDropTask={moveTask} onDeleteTask={deleteTaskFromColumn} onTaskClick={onTaskClick} />
+            <MetricContent />
+            <Board
+              columns={columns}
+              onDropTask={moveTask}
+              onDeleteTask={deleteTaskFromColumn}
+              onTaskClick={onTaskClick}
+            />
+          <section className="board">
+            <GraphicContent data={data} />
+            <ProductivityBarChart data={data}  />
+            </section>
           </div>
         </div>
       </div>

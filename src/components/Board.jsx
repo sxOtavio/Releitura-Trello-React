@@ -13,6 +13,7 @@ function Board({ columns, onDropTask, onDeleteTask, onTaskClick }) {
             const taskId = parseInt(e.dataTransfer.getData("taskId"));
             const sourceColumnIdStr = e.dataTransfer.getData("sourceColumnId");
             const sourceColumnId = sourceColumnIdStr ? parseInt(sourceColumnIdStr) : null;
+            console.log("onDrop called:", { taskId, targetColumnId: column.id, sourceColumnId });
             onDropTask(taskId, column.id, sourceColumnId);
           }}
           onDragOver={(e) => e.preventDefault()}

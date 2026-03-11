@@ -19,13 +19,14 @@ function AddTasks({ onTaskSubmit }) {
         placeholder="Digite a descrição da tarefa"
         onChange={(event) => setDescription(event.target.value)}
       />
+      <h3>Data de Conclusão</h3>
       <input
         value={date}
         type="date"
         className="add-tasks"
         onChange={(event) => setDate(event.target.value)}
       />
-      <button onClick={() => onTaskSubmit(titulo, date, description)}>
+      <button className="add-tasks" onClick={() => onTaskSubmit(titulo,date,description)}>
         Adicionar
       </button>
     

@@ -2,65 +2,49 @@
 .navbar {
   background-color: #026aa7;
   color: white;
-  padding: 0 16px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.2s;
+}
+.navbar button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 16px;
+}
+.navbar button:hover {
+  background-color: #005a8c;
+  border-radius: 1px;
+    cursor: pointer;
+  transition: background 0.2s;
+
+
 }
 
-/* Container principal (sidebar + main-container) */
+/* Container principal ( main-container) */
 .container {
   display: flex;
   min-height: calc(100vh - 48px - 40px); /* desconta navbar e footer */
 }
 
-/* Sidebar fixa (240px) */
-.sidebar {
-  width: 240px;
-  background-color: #f4f5f7;
-  padding: 24px 8px;
-  border-right: 1px solid #dfe1e6;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.sidebar button {
-  background: none;
-  border: none;
-  text-align: left;
-  padding: 10px 16px;
-  margin: 0 4px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #172b4d;
-  cursor: pointer;
-  transition: background 0.2s;
-  width: calc(100% - 8px);
-}
-
-.sidebar button:hover {
-  background-color: #e4e6ed;
-}
-
-.sidebar button.active {
-  background-color: #dfe1e6;
-  color: #026aa7;
-  font-weight: 600;
-}
-
 /* Container que agrupa o board de tarefas e o conteúdo principal */
-.main-conteiner { /* mantive o nome que você usou, mas pode corrigir para main-container se preferir */
+.main-conteiner {
+  /* mantive o nome que você usou, mas pode corrigir para main-container se preferir */
   display: flex;
   flex: 1; /* ocupa o que sobra depois da sidebar */
 }
-
+.imgSmall {
+  width: 40px;
+  height: auto;
+}
 /* Board de tarefas (coluna de tarefas) com largura fixa igual à sidebar */
 .main-board {
   width: 240px; /* mesma largura da sidebar */
@@ -84,7 +68,7 @@
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 24px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .add-tasks form {
@@ -141,8 +125,7 @@
   margin-bottom: 8px;
 }
 .task-card:hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .task-card li {
@@ -179,7 +162,9 @@
   justify-content: center;
   padding: 6px;
   border-radius: 4px;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .task-card button:hover {
@@ -209,43 +194,41 @@
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
+
   }
 
-  .sidebar {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #dfe1e6;
-    padding: 12px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
 
-  .sidebar button {
-    width: auto;
-    margin: 2px;
-  }
 
   .main-conteiner {
     flex-direction: column;
+    
   }
 
   .main-board {
     width: 100%;
     border-right: none;
     border-bottom: 1px solid #dfe1e6;
+    
   }
 
   .main-content {
     padding: 16px;
-  }
+    display: flex;
+  gap: 16px;
+  padding: 16px;
+    text-align: center;
+    
 }
+  }
+
 
 /* Board styles */
 .board {
   display: flex;
   gap: 16px;
   padding: 16px;
+  text-align: center;
+   justify-content: center;
   overflow-x: auto;
 }
 
@@ -256,6 +239,7 @@
   min-width: 250px;
   max-width: 250px;
 }
+
 
 .column h3 {
   margin: 0 0 12px 0;
@@ -268,4 +252,18 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+.metricContent { 
+  background-color: #f4f5f7;
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 250px;
+  max-width: 250px;
+
+  gap: 16px;
+  text-align: center;
+}
+.metricContent img {
+  width: 40px;
+  height: auto;
 }
