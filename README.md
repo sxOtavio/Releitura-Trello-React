@@ -1,16 +1,151 @@
-# React + Vite
+📌 Kanban Productivity Dashboard (React) (Futuramente vai mudar api para RESTful e rodar o backand em python)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web desenvolvida em React.js baseada no método Kanban, com foco em organização de tarefas e análise de produtividade através de métricas e gráficos.
 
-Currently, two official plugins are available:
+O projeto simula um sistema moderno de gerenciamento de tarefas inspirado em ferramentas profissionais, adicionando funcionalidades de drag & drop, persistência local e visualização de desempenho.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🚀 Demonstração
 
-## React Compiler
+Sistema composto por:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Inbox de tarefas
 
-## Expanding the ESLint configuration
+Board Kanban (To Do / Doing / Done)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Métricas de produtividade
+
+Gráficos analíticos
+
+Persistência automática com LocalStorage
+
+🧠 Funcionalidades
+✅ Gerenciamento de Tarefas
+
+Criar tarefas com título, descrição e data
+
+Marcar tarefa como concluída
+
+Excluir tarefas
+
+Validação de campos obrigatórios
+
+📦 Kanban Board
+
+Colunas:
+
+To Do
+
+Doing
+
+Done
+
+Movimentação de tarefas entre colunas
+
+Drag and Drop personalizado
+
+📊 Métricas e Analytics
+
+Indicadores de produtividade
+
+Visualização gráfica de desempenho
+
+Dashboard integrado
+
+💾 Persistência de Dados
+
+Os dados são armazenados automaticamente usando:
+
+localStorage (Futuramente vai mudar para RESTful)
+
+Assim, as tarefas permanecem mesmo após recarregar a página.
+
+🧩 Componentes Principais
+Componente	Função
+NavBar	Barra de navegação
+AddTasks	Formulário para criação de tarefas
+DraggableTask	Lista de tarefas arrastáveis
+Board	Estrutura do Kanban
+MetricContent	Métricas de produtividade
+GraphicContent	Gráfico de desempenho
+ProductivityBarChart	Gráfico de barras
+Footer	Rodapé da aplicação
+⚙️ Tecnologias Utilizadas
+
+⚛️ React.js (Hooks)
+
+JavaScript (ES6+)
+
+CSS3
+
+LocalStorage API (Futuramente vai mudar para RESTful)
+
+Recharts (gráficos)
+
+📂 Estrutura do Projeto
+src/
+│
+├── components/
+│   ├── AddTasks.jsx
+│   ├── Board.jsx
+│   ├── DraggableTask.jsx
+│   ├── MetricContent.jsx
+│   ├── BeLateChart.jsx
+│   ├── ProductivityBarChart.jsx
+│   ├── NavBar.jsx
+│   └── Footer.jsx
+│
+├── App.jsx
+└── App.css
+🔄 Fluxo da Aplicação
+
+Usuário cria tarefa na Inbox
+
+Tarefa é salva no estado global (useState)
+
+Dados persistem no localStorage
+
+Usuário arrasta tarefa para colunas do Kanban
+
+Métricas e gráficos refletem a produtividade
+
+
+▶️ Como executar o projeto
+1️⃣ Clonar repositório
+git clone <url-do-repositorio>
+2️⃣ Instalar dependências
+npm install
+3️⃣ Rodar aplicação
+npm run dev
+
+ou
+
+npm start
+📈 Objetivo do Projeto
+
+Este projeto foi desenvolvido para:
+
+Praticar arquitetura em React
+
+Implementar gerenciamento de estado
+
+Trabalhar com drag & drop
+
+Aplicar conceitos de metodologias ágeis (Kanban)
+
+Criar dashboards analíticos de produtividade
+
+🔮 Melhorias Futuras
+
+✅ Backend com Node.js
+
+✅ Autenticação de usuários
+
+✅ Banco de dados (MongoDB/PostgreSQL)
+
+✅ Métricas avançadas (CFD e Burn Down Chart)
+
+✅ Atualização em tempo real
+
+👨‍💻 Autor
+
+Desenvolvido como projeto de estudo e portfólio em desenvolvimento Front-End.
