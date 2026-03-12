@@ -16,7 +16,11 @@ function App() {
     { day: "Qui", tasks: 8 },
     { day: "Sex", tasks: 5 },
   ];
-  
+ const members = [
+  { name: "Otávio", total: 5 },
+  { name: "Ana", total: 8 },
+  { name: "Woodson", total: 3 }
+];
   //state variavel que atualiza a tela quando é alterado, ou seja
   //quando a funcao rodar ele vai atualizar a pagina e mostrar os
   //novos valores
@@ -156,7 +160,7 @@ function App() {
             />
           <section className="board">
             <GraphicContent data={data} />
-            <ProductivityBarChart data={data}  />
+            <ProductivityBarChart data={members}  />
             </section>
           </div>
         </div>

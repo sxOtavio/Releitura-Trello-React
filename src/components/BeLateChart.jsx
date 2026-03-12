@@ -20,6 +20,15 @@ function BeLateChart({ data }) {
           <YAxis />
           <Tooltip />
           <Line dataKey="tasks" />
+                    
+                    <Line
+            type="monotone"
+            dataKey="tasks"
+            stroke="#22d3ee"
+            strokeWidth={3}
+            dot={{ r: 4 }}
+            activeDot={{ r: 7 }}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>
