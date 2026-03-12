@@ -1,10 +1,10 @@
-📌 Kanban Productivity Dashboard (React) (Futuramente vai mudar api para RESTful e rodar o backand em python)
+ Kanban Productivity Dashboard (React) (Futuramente vai mudar api para RESTful e rodar o backand em python)
 
 Aplicação web desenvolvida em React.js baseada no método Kanban, com foco em organização de tarefas e análise de produtividade através de métricas e gráficos.
 
 O projeto simula um sistema moderno de gerenciamento de tarefas inspirado em ferramentas profissionais, adicionando funcionalidades de drag & drop, persistência local e visualização de desempenho.
 
-🚀 Demonstração
+ Demonstração
 
 Sistema composto por:
 
@@ -18,8 +18,8 @@ Gráficos analíticos
 
 Persistência automática com LocalStorage
 
-🧠 Funcionalidades
-✅ Gerenciamento de Tarefas
+ Funcionalidades
+ Gerenciamento de Tarefas
 
 Criar tarefas com título, descrição e data
 
@@ -29,7 +29,7 @@ Excluir tarefas
 
 Validação de campos obrigatórios
 
-📦 Kanban Board
+ Kanban Board
 
 Colunas:
 
@@ -43,7 +43,7 @@ Movimentação de tarefas entre colunas
 
 Drag and Drop personalizado
 
-📊 Métricas e Analytics
+ Métricas e Analytics
 
 Indicadores de produtividade
 
@@ -51,7 +51,7 @@ Visualização gráfica de desempenho
 
 Dashboard integrado
 
-💾 Persistência de Dados
+ Persistência de Dados
 
 Os dados são armazenados automaticamente usando:
 
@@ -59,7 +59,7 @@ localStorage (Futuramente vai mudar para RESTful)
 
 Assim, as tarefas permanecem mesmo após recarregar a página.
 
-🧩 Componentes Principais
+ Componentes Principais
 Componente	Função
 NavBar	Barra de navegação
 AddTasks	Formulário para criação de tarefas
@@ -71,7 +71,7 @@ ProductivityBarChart	Gráfico de barras
 Footer	Rodapé da aplicação
 ⚙️ Tecnologias Utilizadas
 
-⚛️ React.js (Hooks)
+ React.js (Hooks)
 
 JavaScript (ES6+)
 
@@ -81,7 +81,7 @@ LocalStorage API (Futuramente vai mudar para RESTful)
 
 Recharts (gráficos)
 
-📂 Estrutura do Projeto
+ Estrutura do Projeto
 src/
 │
 ├── components/
@@ -96,7 +96,7 @@ src/
 │
 ├── App.jsx
 └── App.css
-🔄 Fluxo da Aplicação
+ Fluxo da Aplicação
 
 Usuário cria tarefa na Inbox
 
@@ -109,18 +109,18 @@ Usuário arrasta tarefa para colunas do Kanban
 Métricas e gráficos refletem a produtividade
 
 
-▶️ Como executar o projeto
-1️⃣ Clonar repositório
+ Como executar o projeto
+ Clonar repositório
 git clone <url-do-repositorio>
-2️⃣ Instalar dependências
+ Instalar dependências
 npm install
-3️⃣ Rodar aplicação
+ Rodar aplicação
 npm run dev
 
 ou
 
 npm start
-📈 Objetivo do Projeto
+ Objetivo do Projeto
 
 Este projeto foi desenvolvido para:
 
@@ -136,16 +136,16 @@ Criar dashboards analíticos de produtividade
 
 🔮 Melhorias Futuras
 
-✅ Backend com Node.js
+ Backend com Node.js
 
-✅ Autenticação de usuários
+ Autenticação de usuários
 
-✅ Banco de dados (MongoDB/PostgreSQL)
+ Banco de dados (MongoDB/PostgreSQL)
 
-✅ Métricas avançadas (CFD e Burn Down Chart)
+ Métricas avançadas (CFD e Burn Down Chart)
 
-✅ Atualização em tempo real
+ Atualização em tempo real
 
-👨‍💻 Autor
+ Autor
 
 Desenvolvido como projeto de estudo e portfólio em desenvolvimento Front-End.
