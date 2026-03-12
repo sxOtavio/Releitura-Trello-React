@@ -1,151 +1,153 @@
- Kanban Productivity Dashboard (React) (Futuramente vai mudar api para RESTful e rodar o backand em python)
+ Kanban Productivity Dashboard (React)
 
-Aplicação web desenvolvida em React.js baseada no método Kanban, com foco em organização de tarefas e análise de produtividade através de métricas e gráficos.
+Projeto de um sistema Kanban desenvolvido em **React.js**, criado com o objetivo de praticar organização de tarefas, gerenciamento de estado e visualização de produtividade através de gráficos.
 
-O projeto simula um sistema moderno de gerenciamento de tarefas inspirado em ferramentas profissionais, adicionando funcionalidades de drag & drop, persistência local e visualização de desempenho.
+A ideia foi construir algo inspirado em ferramentas reais de gestão, permitindo mover tarefas entre colunas, acompanhar métricas e visualizar o fluxo de trabalho de forma simples e interativa.
 
- Demonstração
+>  Futuramente o projeto será evoluído para utilizar uma **API RESTful** com backend em **Python**.
 
-Sistema composto por:
+---
 
-Inbox de tarefas
+##  Demonstração
 
-Board Kanban (To Do / Doing / Done)
+O sistema possui:
 
-Métricas de produtividade
+- Inbox para criação de tarefas
+- Board Kanban (**To Do / Doing / Done**)
+- Métricas de produtividade
+- Gráficos analíticos
+- Persistência automática usando LocalStorage
 
-Gráficos analíticos
+---
 
-Persistência automática com LocalStorage
+##  Funcionalidades
 
- Funcionalidades
- Gerenciamento de Tarefas
+### Gerenciamento de tarefas
+- Criar tarefas com título, descrição e data
+- Marcar tarefas como concluídas
+- Excluir tarefas
+- Validação básica dos campos
 
-Criar tarefas com título, descrição e data
+### Kanban Board
+- Colunas:
+  - To Do
+  - Doing
+  - Done
+- Movimentação de tarefas entre colunas
+- Drag and Drop personalizado
 
-Marcar tarefa como concluída
+### Métricas e Analytics
+- Indicadores simples de produtividade
+- Visualização gráfica do desempenho
+- Dashboard integrado ao board
 
-Excluir tarefas
+### Persistência de dados
+Os dados são salvos automaticamente no navegador utilizando:
 
-Validação de campos obrigatórios
 
- Kanban Board
+localStorage
 
-Colunas:
 
-To Do
+Assim, as tarefas continuam disponíveis mesmo após recarregar a página.
 
-Doing
+*(Planejado: migração para API RESTful)*
 
-Done
+---
 
-Movimentação de tarefas entre colunas
+##  Componentes principais
 
-Drag and Drop personalizado
+| Componente | Função |
+|---|---|
+| NavBar | Barra de navegação |
+| AddTasks | Criação de tarefas |
+| DraggableTask | Lista de tarefas arrastáveis |
+| Board | Estrutura do Kanban |
+| MetricContent | Métricas |
+| GraphicContent | Gráficos |
+| ProductivityBarChart | Gráfico de barras |
+| Footer | Rodapé |
 
- Métricas e Analytics
+---
 
-Indicadores de produtividade
+##  Tecnologias utilizadas
 
-Visualização gráfica de desempenho
+- React.js (Hooks)
+- JavaScript (ES6+)
+- CSS3
+- Recharts (gráficos)
+- LocalStorage API *(temporário)*
 
-Dashboard integrado
+---
 
- Persistência de Dados
+##  Estrutura do projeto
 
-Os dados são armazenados automaticamente usando:
 
-localStorage (Futuramente vai mudar para RESTful)
-
-Assim, as tarefas permanecem mesmo após recarregar a página.
-
- Componentes Principais
-Componente	Função
-NavBar	Barra de navegação
-AddTasks	Formulário para criação de tarefas
-DraggableTask	Lista de tarefas arrastáveis
-Board	Estrutura do Kanban
-MetricContent	Métricas de produtividade
-GraphicContent	Gráfico de desempenho
-ProductivityBarChart	Gráfico de barras
-Footer	Rodapé da aplicação
-⚙️ Tecnologias Utilizadas
-
- React.js (Hooks)
-
-JavaScript (ES6+)
-
-CSS3
-
-LocalStorage API (Futuramente vai mudar para RESTful)
-
-Recharts (gráficos)
-
- Estrutura do Projeto
 src/
 │
 ├── components/
-│   ├── AddTasks.jsx
-│   ├── Board.jsx
-│   ├── DraggableTask.jsx
-│   ├── MetricContent.jsx
-│   ├── BeLateChart.jsx
-│   ├── ProductivityBarChart.jsx
-│   ├── NavBar.jsx
-│   └── Footer.jsx
+│ ├── AddTasks.jsx
+│ ├── Board.jsx
+│ ├── DraggableTask.jsx
+│ ├── MetricContent.jsx
+│ ├── BeLateChart.jsx
+│ ├── ProductivityBarChart.jsx
+│ ├── NavBar.jsx
+│ └── Footer.jsx
 │
 ├── App.jsx
 └── App.css
- Fluxo da Aplicação
-
-Usuário cria tarefa na Inbox
-
-Tarefa é salva no estado global (useState)
-
-Dados persistem no localStorage
-
-Usuário arrasta tarefa para colunas do Kanban
-
-Métricas e gráficos refletem a produtividade
 
 
- Como executar o projeto
- Clonar repositório
+---
+
+##  Fluxo da aplicação
+
+1. Usuário cria uma tarefa na Inbox  
+2. A tarefa é armazenada no estado global (`useState`)  
+3. Os dados são persistidos no `localStorage`  
+4. A tarefa pode ser movida entre colunas via drag & drop  
+5. Métricas e gráficos refletem o progresso
+
+---
+##  Este projeto foi criado para praticar:
+
+Arquitetura baseada em componentes com React
+
+Gerenciamento de estado
+
+Drag & Drop
+
+Conceitos de Kanban
+
+Construção de dashboards com gráficos
+
+ Melhorias futuras
+
+API RESTful
+
+Backend em Python
+
+Autenticação de usuários
+
+Banco de dados (MongoDB/PostgreSQL)
+
+Métricas avançadas (CFD e Burn Down Chart)
+
+Atualização em tempo real
+
+##  Como executar
+
+```bash
 git clone <url-do-repositorio>
- Instalar dependências
 npm install
- Rodar aplicação
 npm run dev
 
 ou
 
 npm start
- Objetivo do Projeto
 
-Este projeto foi desenvolvido para:
 
-Praticar arquitetura em React
-
-Implementar gerenciamento de estado
-
-Trabalhar com drag & drop
-
-Aplicar conceitos de metodologias ágeis (Kanban)
-
-Criar dashboards analíticos de produtividade
-
-🔮 Melhorias Futuras
-
- Backend com Node.js
-
- Autenticação de usuários
-
- Banco de dados (MongoDB/PostgreSQL)
-
- Métricas avançadas (CFD e Burn Down Chart)
-
- Atualização em tempo real
 
  Autor
 
-Desenvolvido como projeto de estudo e portfólio em desenvolvimento Front-End.
+Projeto desenvolvido como parte dos meus estudos e portfólio em desenvolvimento web.
