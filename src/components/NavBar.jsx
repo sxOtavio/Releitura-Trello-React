@@ -1,5 +1,5 @@
 import { useState } from "react";
-function NavBar ({onTaskSubmit}){
+function NavBar (){
 
     return(
 <div className="navbar">

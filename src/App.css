@@ -229,6 +229,21 @@
 }
   }
 
+  /* Navbar responsiva para mobile */
+  @media (max-width: 768px) {
+    .navbar {
+      width: 100%; /* Em vez de 100vw para evitar overflow */
+      flex-wrap: wrap; /* Permite quebra de linha se necessário */
+      height: auto; /* Altura automática */
+      padding: 8px 12px; /* Padding menor */
+    }
+    .navbar button {
+      font-size: 16px; /* Fonte menor */
+      margin-right: 8px;
+      margin-bottom: 4px; /* Espaço para quebra */
+    }
+  }
+
 
 /* Board styles */
 .board {
