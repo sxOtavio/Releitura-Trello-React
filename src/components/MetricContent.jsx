@@ -1,7 +1,7 @@
   import imgWarning from "../img/warning.png";
   import imgCalendar from "../img/calendar.png"
   import imgWifi from "../img/wifi.png"
-  function MetricContent() {
+  function MetricContent(props) {
 
     return (
     <>
@@ -13,6 +13,7 @@
         <div className="metricContent">
             <img className="imgSmall" src={imgCalendar} alt="Tarefas agendadas" srcset="" />
           <h3>Conclusão Prevista</h3>
+            <h3>{props.finalDate || "Data não definida"}</h3>
         </div>
         <div className="metricContent">
             <img className="imgSmall" src={imgWifi} alt="Produtividade" srcset="" />

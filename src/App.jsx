@@ -6,7 +6,7 @@ import Board from "./components/Board";
 import DraggableTask from "./components/DraggableTask";
 import GraphicContent from "./components/BeLateChart";
 import MetricContent from "./components/MetricContent";
-import ProductivityBarChart from "./components/ProductivityBarChart"
+import ProductivityBarChart from "./components/ProductivityBarChart";
 import "./App.css";
 function App() {
   const data = [
@@ -16,11 +16,11 @@ function App() {
     { day: "Qui", tasks: 8 },
     { day: "Sex", tasks: 5 },
   ];
- const members = [
-  { name: "Otávio", total: 5 },
-  { name: "Ana", total: 8 },
-  { name: "Woodson", total: 3 }
-];
+  const members = [
+    { name: "Otávio", total: 5 },
+    { name: "Ana", total: 8 },
+    { name: "Woodson", total: 3 },
+  ];
   //state variavel que atualiza a tela quando é alterado, ou seja
   //quando a funcao rodar ele vai atualizar a pagina e mostrar os
   //novos valores
@@ -36,7 +36,7 @@ function App() {
       { id: 3, title: "Done", tasks: [] },
     ],
   );
-  <> </>;
+  const [finalDate, setFinalDate] = useState("");
   //armazenando no local storage
   useEffect(() => {
     console.log("task alterado");
@@ -132,6 +132,13 @@ function App() {
     };
     setTasks([...tasks, newTask]);
   }
+  function onFinalDateSubmit(date) {
+    if (!date) return; // Se não há data, não faz nada
+    const parsedDate = new Date(date);
+    const dataBR = parsedDate.toLocaleDateString('pt-BR');
+    setFinalDate(dataBR);
+  }
+
   return (
     <div>
       <NavBar />
@@ -143,7 +150,10 @@ function App() {
             {" "}
             {/* Classe adicionada para limitar largura */}
             <h1>Inbox</h1>
-            <AddTasks onTaskSubmit={onTaskSubmit} />
+            <AddTasks
+              onTaskSubmit={onTaskSubmit}
+              onFinalDateSubmit={onFinalDateSubmit}
+            />
             <DraggableTask
               tasks={tasks}
               onTaskClick={onTaskClick}
@@ -151,16 +161,16 @@ function App() {
             />
           </div>
           <div className="main-content">
-            <MetricContent />
+            <MetricContent finalDate={finalDate} />
             <Board
               columns={columns}
               onDropTask={moveTask}
               onDeleteTask={deleteTaskFromColumn}
               onTaskClick={onTaskClick}
             />
-          <section className="board">
-            <GraphicContent data={data} />
-            <ProductivityBarChart data={members}  />
+            <section className="board">
+              <GraphicContent data={data} />
+              <ProductivityBarChart data={members} />
             </section>
           </div>
         </div>
