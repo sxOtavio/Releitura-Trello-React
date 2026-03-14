@@ -7,6 +7,7 @@ import DraggableTask from "./components/DraggableTask";
 import GraphicContent from "./components/BeLateChart";
 import MetricContent from "./components/MetricContent";
 import ProductivityBarChart from "./components/ProductivityBarChart";
+import { ChevronLeft } from 'lucide-react';
 import "./App.css";
 function App() {
   const data = [
@@ -36,7 +37,9 @@ function App() {
       { id: 3, title: "Done", tasks: [] },
     ],
   );
+  const [showAddTask, setShowAddTask] = useState(true);
   const [finalDate, setFinalDate] = useState("");
+  const [isBoardCollapsed, setIsBoardCollapsed] = useState(false);
   //armazenando no local storage
   useEffect(() => {
     console.log("task alterado");
@@ -132,11 +135,15 @@ function App() {
     };
     setTasks([...tasks, newTask]);
   }
+  
   function onFinalDateSubmit(date) {
     if (!date) return; // Se não há data, não faz nada
     const parsedDate = new Date(date);
+    
     const dataBR = parsedDate.toLocaleDateString('pt-BR');
     setFinalDate(dataBR);
+    setShowAddTask(false); // Esconde o formulário após a submissão
+    
   }
 
   return (
@@ -146,10 +153,19 @@ function App() {
         <div className="main-conteiner">
           {" "}
           {/* Classe adicionada */}
-          <div className="main-board">
+            <div className={`main-board ${isBoardCollapsed ? "collapsed" : ""}`}>
             {" "}
             {/* Classe adicionada para limitar largura */}
-            <h1>Inbox</h1>
+            <button
+              type="button"
+              onClick={() => setIsBoardCollapsed((prev) => !prev)}
+              className="collapse-button"
+            >
+              <ChevronLeft
+                style={{ transform: isBoardCollapsed ? "rotate(180deg)" : "rotate(0deg)" }}
+              />
+            </button>
+            <h1>Inbox</h1> 
             <AddTasks
               onTaskSubmit={onTaskSubmit}
               onFinalDateSubmit={onFinalDateSubmit}
@@ -161,7 +177,7 @@ function App() {
             />
           </div>
           <div className="main-content">
-            <MetricContent finalDate={finalDate} />
+            <MetricContent finalDate={finalDate} tasks={tasks} columns={columns} />
             <Board
               columns={columns}
               onDropTask={moveTask}

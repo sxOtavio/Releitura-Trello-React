@@ -61,6 +61,17 @@
   border-right: 1px solid #dfe1e6;
   flex-shrink: 0;
   overflow-y: auto;
+  transition: width 0.2s ease;
+}
+
+.main-board.collapsed {
+  width: 72px; /* tamanho reduzido quando recolhido */
+  padding: 16px 12px;
+}
+
+.main-board.collapsed h1,
+.main-board.collapsed .add-tasks {
+  display: none;
 }
 
 .main-board h1 {
@@ -79,6 +90,13 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+.add-tasks.disabled {
+  display: none;
+}
+
+.final-date.disabled {
+  display: none;
+}
 .add-tasks form {
   display: flex;
   flex-direction: column;

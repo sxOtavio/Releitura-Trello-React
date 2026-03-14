@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 function AddTasks({ onTaskSubmit, onFinalDateSubmit }) {
   const [titulo, setTitulo] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [finalDate, setFinalDate] = useState("");
+  const [showFinalDateTask, setShowFinalDateTask] = useState(true);
+
+  useEffect(() => {
+    console.log("showFinalDateTask agora é:", showFinalDateTask);
+  }, [showFinalDateTask]);
   return (
     <>
       <input
@@ -33,19 +38,25 @@ function AddTasks({ onTaskSubmit, onFinalDateSubmit }) {
       >
         Adicionar
       </button>
-      <h3>Data final da sprint</h3>
-      <input
-        value={finalDate}
-        type="date"
-        className="add-tasks"
-        onChange={(event) => setFinalDate(event.target.value)}
-      />
-      <button
-        className="add-tasks"
-        onClick={() => onFinalDateSubmit(finalDate)}
-      >
-        Adicionar
-      </button>
+      <div className={showFinalDateTask ? "add-tasks" : "final-date disabled"}>
+        <h3>Data final da sprint</h3>
+        <input
+          value={finalDate}
+          type="date"
+          className="add-tasks"
+          onChange={(event) => setFinalDate(event.target.value)}
+        />
+        <button
+          className="add-tasks"
+          onClick={() => {
+            onFinalDateSubmit(finalDate);
+            setShowFinalDateTask(false);
+            console.log(showFinalDateTask);
+          }}
+        >
+          Adicionar
+        </button>
+      </div>
     </>
   );
 }
