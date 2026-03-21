@@ -1,0 +1,70 @@
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda a altura da viewport */
+    background-color: #6a92ce; /* Cor de fundo suave para a página de login */
+}
+.LoginContainer{
+    margin: 100px auto;
+    background-color: #417ecc;
+    display: grid;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    width: 300px;
+    margin: 100px auto;
+    padding: 50px;
+    border-radius: 20px;
+    border: 3px solid #2658bd;
+    box-shadow: 2px 3px 7px #7dc4ec;
+    
+
+}
+.LoginContainer h1{
+    background-color: #727272;
+    color: #ffffff ;
+    text-align: center;
+    padding: 10px 12px;
+    border: 1px solid #dfe1e6;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border 0.2s;
+}
+.LoginContainer h3{
+    background-color: #1d6792;
+    color: #ffffff ;
+    text-align: center;
+    padding: 10px 12px;
+    border: 1px solid #dfe1e6;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border 0.2s;
+}
+.LoginContainer input{
+    background-color: #f4f5f7;
+    
+    color: #000000 ;
+    padding: 10px 12px;
+    border: 1px solid #dfe1e6;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border 0.2s;
+}
+.LoginContainer button {
+    background-color: #026aa7;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid #dfe1e6;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.2s;
+}
+.LoginContainer button:hover {
+    background-color: #0084d1;
+    transition: background 0.2s;
+}

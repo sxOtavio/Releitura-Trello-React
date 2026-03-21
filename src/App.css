@@ -1,3 +1,4 @@
+
 /* Navbar */
 .navbar {
   background-color: #026aa7;
@@ -32,8 +33,15 @@
 .navbar button:hover {
   background-color: #005a8c;
   border-radius: 5px;
-    cursor: pointer;
+  cursor: pointer;
   transition: background 0.5s;
+}
+.loginButton {
+  margin-left: auto; /* Empurra para a direita */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 30px;
 }
 
 /* Container principal ( main-container) */
@@ -220,46 +228,39 @@
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
-
   }
-
-
 
   .main-conteiner {
     flex-direction: column;
-    
   }
 
   .main-board {
     width: 100%;
     border-right: none;
     border-bottom: 1px solid #dfe1e6;
-    
   }
 
   .main-content {
     padding: 16px;
     display: flex;
-  gap: 16px;
-  padding: 16px;
+    gap: 16px;
+    padding: 16px;
     text-align: center;
-    
+  }
 }
-  }
 
-  /* Navbar responsiva para mobile */
-  @media (max-width: 768px) {
-    .navbar {
-      width: 100vw; /* Mantém 100vw para cobrir toda largura */
-      height: 48px; /* Altura fixa */
-      padding: 10px 12px; /* Padding ajustado */
-    }
-    .navbar button {
-      font-size: 16px; /* Fonte menor */
-      margin-right: 8px; /* Margem menor */
-    }
+/* Navbar responsiva para mobile */
+@media (max-width: 768px) {
+  .navbar {
+    width: 100vw; /* Mantém 100vw para cobrir toda largura */
+    height: 48px; /* Altura fixa */
+    padding: 10px 12px; /* Padding ajustado */
   }
-
+  .navbar button {
+    font-size: 16px; /* Fonte menor */
+    margin-right: 8px; /* Margem menor */
+  }
+}
 
 /* Board styles */
 .board {
@@ -267,8 +268,7 @@
   gap: 16px;
   padding: 16px;
   text-align: center;
-   justify-content: center;
-
+  justify-content: center;
 }
 
 .column {
@@ -278,7 +278,6 @@
   min-width: 250px;
   max-width: 250px;
 }
-
 
 .column h3 {
   margin: 0 0 12px 0;
@@ -292,7 +291,7 @@
   flex-direction: column;
   gap: 8px;
 }
-.metricContent { 
+.metricContent {
   background-color: #f4f5f7;
   border-radius: 8px;
   padding: 16px;

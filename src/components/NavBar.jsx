@@ -1,15 +1,27 @@
-function NavBar (){
+import { useNavigate } from "react-router-dom";
+function NavBar() {
 
-    return(
-<div className="navbar">
-<button>Home</button>
-<button>Quadros</button>
-<button>Membros</button>
-<button>Configurações</button>
+  const navigate = useNavigate();
+  
+  function onLoginClick() {
+    navigate(`/login`);
+  }
+  return (
+    <div className="navbar">
+      <button>Home</button>
+      <button>Quadros</button>
+      <button>Membros</button>
+      <button>Configurações</button>
 
-
-</div>
-
-    );
+      <div className="loginButton">       
+      </div>
+      <button
+        className="loginButton"
+        onClick={() => {onLoginClick();}}
+      >
+        Login
+      </button>
+    </div>
+  );
 }
 export default NavBar;

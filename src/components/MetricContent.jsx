@@ -3,7 +3,9 @@ import imgCalendar from "../img/calendar.png";
 import imgWifi from "../img/wifi.png";
 function MetricContent(props) {
   const tasksFromState = props.tasks || [];
-  const tasksFromColumns = (props.columns || []).flatMap((col) => col.tasks || []);
+  const tasksFromColumns = (props.columns || []).flatMap(
+    (col) => col.tasks || [],
+  );
   const allTasks = [...tasksFromState, ...tasksFromColumns];
 
   function getLateTasksCount() {
