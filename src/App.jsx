@@ -12,6 +12,9 @@ import "./App.css";
 
 
 function App() {
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks")) || [],
+  );
   const data = [
     { day: "Dom", tasks: 1 },
     { day: "Seg", tasks: 3 },
@@ -27,7 +30,7 @@ function App() {
     { name: "Ana", total: 8 },
     { name: "Woodson", total: 3 },
   ];
-
+// Colunas do quadro kanban
   const [columns, setColumns] = useState(
     JSON.parse(localStorage.getItem("columns")) || [
       { id: 1, title: "To Do", tasks: [] },
@@ -38,7 +41,8 @@ function App() {
   const [finalDate, setFinalDate] = useState("");
   const [isBoardCollapsed, setIsBoardCollapsed] = useState(false);
   
-  //armazenando no local storage
+  //armazenando no local storage----------------------------
+  
   useEffect(() => {
     console.log("task alterado");
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -51,7 +55,9 @@ function App() {
   function moveTask(taskId, targetColumnId, sourceColumnId = null) {
     console.log("moveTask called:", { taskId, targetColumnId, sourceColumnId });
     if (sourceColumnId === null) {
-      // From tasks to column
+    
+  // Do tasks para column----------------------------
+    
       const task = tasks.find((t) => t.id === taskId);
       if (!task) {
         console.log("Task not found in tasks:", taskId);
@@ -66,7 +72,7 @@ function App() {
         ),
       );
     } else {
-      // From column to column
+ // De uma coluna para outra----------------------------
       setColumns((prev) => {
         const sourceCol = prev.find((col) => col.id === sourceColumnId);
         const task = sourceCol?.tasks.find((t) => t.id === taskId);
@@ -101,7 +107,9 @@ function App() {
     );
   }
 
-  function onTaskClick(tasksId) {
+// Marcar tarefa como concluída ou não concluída----------------------------
+  
+function onTaskClick(tasksId) {
     const newTask = tasks.map((tasks) => {
       if (tasks.id == tasksId) {
         return { ...tasks, isCompleted: !tasks.isCompleted };
@@ -111,19 +119,24 @@ function App() {
     setTasks(newTask);
   }
 
-  function deleteOnClick(tasksId) {
+// Deletar tarefa do quadro kanban----------------------------
+  
+function deleteOnClick(tasksId) {
     const newTask = tasks.filter((tasks) => tasks.id !== tasksId);
     setTasks(newTask);
   }
   function onTaskSubmit(titulo, date, description) {
-    //Validação dos campos
+  
+ //Validação dos campos
+  
     if (titulo.trim() == "" || description.trim() == "") {
       return alert("Digite nos campos indicados");
     }
 
-    //tratamento das informações
-    // lembrar de criar uma aba de comentarios
-    const newTask = {
+ //tratamento das informações
+ // lembrar de criar uma aba de comentarios
+ 
+ const newTask = {
       id: tasks.length + 1,
       titulo: titulo,
       description: description,

@@ -2,33 +2,33 @@ import { ChevronRightIcon, Trash2Icon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import DraggablePanel from "./Draggable";
 
-function Tasks(props) {
+function draggableTasks({ tasks, onTaskClick, deleteOnClick }) {
   const navigate = useNavigate();
   const query = new URLSearchParams();
 
-  function onSeeDetailsClick(tasks) {
-    query.set("titulo", tasks.titulo);
-    query.set("description", tasks.description);
+  function onSeeDetailsClick(task) {
+    query.set("titulo", task.titulo);
+    query.set("description", task.description);
     navigate(`/tasks?${query.toString()}`);
   }
 
   return (
     <section className="task-card">
-      {props.tasks.map((tasks) => (
-        <DraggablePanel key={tasks.id} taskId={tasks.id} sourceColumnId={null}>
+      {tasks.map((task) => (
+        <DraggablePanel key={task.id} taskId={task.id} sourceColumnId={null}>
           <section>
             <button
-              onClick={() => props.onTaskClick(tasks.id)}
-              className={tasks.isCompleted ? "completed" : ""}
+              onClick={() => onTaskClick(task.id)}
+              className={task.isCompleted ? "completed" : ""}
             >
-              {tasks.titulo}
+              {task.titulo}
             </button>
 
-            <button onClick={() => onSeeDetailsClick(tasks)}>
+            <button onClick={() => onSeeDetailsClick(task)}>
               <ChevronRightIcon />
             </button>
 
-            <button onClick={() => props.deleteOnClick(tasks.id)}>
+            <button onClick={() => deleteOnClick(task.id)}>
               <Trash2Icon />
             </button>
           </section>
@@ -38,4 +38,4 @@ function Tasks(props) {
   );
 }
 
-export default Tasks;
+export default draggableTasks;
