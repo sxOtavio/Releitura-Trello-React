@@ -26,6 +26,10 @@ function AddTasks({ onTaskSubmit, onFinalDateSubmit }) {
         placeholder="Digite a descrição da tarefa"
         onChange={(event) => setDescription(event.target.value)}
       />
+
+      {//Parte de validação para mostrar o campo de data final da sprint apenas quando a tarefa for adicionada      
+       }
+
       <h3>Data de Conclusão da tarefa</h3>
       <input
         value={date}
