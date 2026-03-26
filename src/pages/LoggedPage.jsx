@@ -14,14 +14,30 @@ import axios from "axios";
 
 function App() {
   const [tasks, setTasks] = useState(
-    JSON.parse(localStorage.getItem("tasks")) || [],
+    []
   );
- const [token, setToken] = useState(
-  localStorage.getItem("token")
-);
+  console.log("tem isso no json",tasks);
+  useEffect(()=>{
+      async function fechTasks() {
+        console.log("tentando conexao");
+    
+    try {
+      const response = await axios.get("http://localhost:3000/tasks");
+      console.log("Tasks recebidas:", response);
+       // Supondo que a API retorne uma lista de task
+      setTasks(response.data.rows);
+      console.log(response.data.rows);
+    } catch (error) {
+      console.error("Erro ao buscar API:", error);
+    }
+  }
+      fechTasks();
+}, []); // RODA SÓ UMA VEZ);
+ const [token, setToken] = useState();
 useEffect(() => {
   const savedToken = localStorage.getItem("token");
   setToken(savedToken);
+  console.log("token salvo")
 }, []);
   const data = [
     { day: "Dom", tasks: 1 },
@@ -138,11 +154,11 @@ function deleteOnClick(tasksId) {
   }
 
   //Criando a nova tarefa ----------------------------
-  async function onTaskSubmit(titulo, date, description,columnId) {
+  async function onTaskSubmit(title, date, description,columnId) {
   
  //Validação dos campos
   
-    if (titulo.trim() == "" || description.trim() == "") {
+    if (title.trim() == "" || description.trim() == "") {
       return alert("Digite nos campos indicados");
     }
 
@@ -152,7 +168,7 @@ function deleteOnClick(tasksId) {
  
  const newTask = {
       id: tasks.length + 1,
-      titulo: titulo,
+      title: title,
       description: description,
       date: date,
       columnId: columnId, //parte que define de qual coluna a tarefa pertence e null ela é uma task card ainda
@@ -161,7 +177,7 @@ function deleteOnClick(tasksId) {
 //mandando informações para o backend----------------------------
     try {
       const response = await axios.post("http://localhost:3000/tasks", {
-        token,
+       
         newTask
       });
 

@@ -6,7 +6,7 @@ function Tasks(props) {
   const query = new URLSearchParams();
 
   function onSeeDetailsClick(task) {
-    query.set("titulo", task.titulo);
+    query.set("title", task.title);
     query.set("description", task.description);
     navigate(`/tasks?${query.toString()}`);
   }
@@ -20,7 +20,7 @@ function Tasks(props) {
             onClick={() => props.onTaskClick(task.id)}
             className={task.isCompleted ? "completed" : ""}
           >
-            {task.titulo}
+            {task.title}
           </button>
 
           <button onClick={() => onSeeDetailsClick(task)}>

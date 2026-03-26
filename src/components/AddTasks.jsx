@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function AddTasks({ onTaskSubmit, onFinalDateSubmit }) {
-  const [titulo, setTitulo] = useState("");
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [finalDate, setFinalDate] = useState("");
@@ -13,11 +13,11 @@ function AddTasks({ onTaskSubmit, onFinalDateSubmit }) {
   return (
     <>
       <input
-        value={titulo}
+        value={title}
         type="text"
         className="add-tasks"
         placeholder="Digite o titulo da tarefa"
-        onChange={(event) => setTitulo(event.target.value)}
+        onChange={(event) => setTitle(event.target.value)}
       />
       <input
         value={description}
@@ -39,7 +39,7 @@ function AddTasks({ onTaskSubmit, onFinalDateSubmit }) {
       />
       <button
         className="add-tasks"
-        onClick={() => onTaskSubmit(titulo, date, description)}
+        onClick={() => onTaskSubmit(title, date, description)}
       >
         Adicionar
       </button>

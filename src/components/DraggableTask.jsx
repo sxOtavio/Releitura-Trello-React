@@ -6,22 +6,22 @@ function draggableTasks({ tasks, onTaskClick, deleteOnClick }) {
   const navigate = useNavigate();
   const query = new URLSearchParams();
 
-  function onSeeDetailsClick(task) {
-    query.set("titulo", task.titulo);
-    query.set("description", task.description);
+  function onSeeDetailsClick(tasks) {
+    query.set("titulo", tasks.title);
+    query.set("description", tasks.description);
     navigate(`/tasks?${query.toString()}`);
   }
 
   return (
     <section className="task-card">
       {tasks.map((task) => (
-        <DraggablePanel key={task.id} taskId={task.id} sourceColumnId={null}>
+        <DraggablePanel key={task.id} taskId={task.id} sourceColumnId={task.column_id}>
           <section>
             <button
               onClick={() => onTaskClick(task.id)}
               className={task.isCompleted ? "completed" : ""}
             >
-              {task.titulo}
+              {task.title}
             </button>
 
             <button onClick={() => onSeeDetailsClick(task)}>
