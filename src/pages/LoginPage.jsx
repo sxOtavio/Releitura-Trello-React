@@ -28,7 +28,7 @@ function LoginPage() {
       const token = response.data.token; // Supondo que a API retorne um token
       localStorage.setUserToken("token", token);
       navigate("/logged");
-=======
+
         setUserToken(token);
         JSON.parse(localStorage.getItem("userToken")) || [],
         localStorage.setItem("token", JSON.stringify(token));
