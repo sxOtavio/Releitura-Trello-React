@@ -26,7 +26,6 @@ function LoginPage() {
       });
       console.log("Dados enviados:", response.data);
       const token = response.data.token; // Supondo que a API retorne um token
-<<<<<<< HEAD
       localStorage.setUserToken("token", token);
       navigate("/logged");
 =======
@@ -34,7 +33,7 @@ function LoginPage() {
         JSON.parse(localStorage.getItem("userToken")) || [],
         localStorage.setItem("token", JSON.stringify(token));
         navigate("/logged");
->>>>>>> e4640b92576436636da5b265f44f28e722607608
+
     } catch (error) {
         alert("Login falhou. Verifique suas credenciais.");
       console.error("Erro ao buscar API:", error);
