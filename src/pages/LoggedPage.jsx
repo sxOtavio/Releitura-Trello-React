@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import AddTasks from "./components/AddTasks";
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
-import Board from "./components/Board";
-import DraggableTask from "./components/DraggableTask";
-import GraphicContent from "./components/BeLateChart";
-import MetricContent from "./components/MetricContent";
-import ProductivityBarChart from "./components/ProductivityBarChart";
+import AddTasks from "../components/AddTasks";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
+import Board from "../components/Board";
+import DraggableTask from "../components/DraggableTask";
+import GraphicContent from "../components/BeLateChart";
+import MetricContent from "../components/MetricContent";
+import ProductivityBarChart from "../components/ProductivityBarChart";
 import { ChevronLeft } from "lucide-react";
-import "./App.css";
+import axios from "axios";
+
 
 
 function App() {
@@ -137,7 +138,7 @@ function deleteOnClick(tasksId) {
   }
 
   //Criando a nova tarefa ----------------------------
-  function onTaskSubmit(titulo, date, description,columnId) {
+  async function onTaskSubmit(titulo, date, description,columnId) {
   
  //Validação dos campos
   
@@ -157,7 +158,19 @@ function deleteOnClick(tasksId) {
       columnId: columnId, //parte que define de qual coluna a tarefa pertence e null ela é uma task card ainda
       isCompleted: false,
     };
-    setTasks([...tasks, newTask]);
+//mandando informações para o backend----------------------------
+    try {
+      const response = await axios.post("http://localhost:3000/tasks", {
+        token,
+        newTask
+      });
+
+    }
+     catch (error) {
+        alert("Falha ao enviar tarefa. Verifique o log");
+      console.error("Erro ao buscar API:", error);
+    }
+    //setTasks([...tasks, newTask]);
   }
 
   function onFinalDateSubmit(date) {
@@ -172,7 +185,6 @@ function deleteOnClick(tasksId) {
 
   return (
     <div>
-  
       <NavBar />
       <div className="container">
         <div className="main-conteiner">
@@ -181,8 +193,6 @@ function deleteOnClick(tasksId) {
           <div className={`main-board ${isBoardCollapsed ? "collapsed" : ""}`}>
             {" "}
             {/* Classe adicionada para limitar largura */}
-            <h3>Modo de demontração</h3>
-            <h5>Não se preocupe tudo esta salvo na memoria local</h5>
             <button
               type="button"
               onClick={() => setIsBoardCollapsed((prev) => !prev)}

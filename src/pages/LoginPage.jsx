@@ -26,8 +26,12 @@ function LoginPage() {
       });
       console.log("Dados enviados:", response.data);
       const token = response.data.token; // Supondo que a API retorne um token
-      localStorage.setUserToken("token", token);
+        setUserToken(token);
+        JSON.parse(localStorage.getItem("userToken")) || [],
+        localStorage.setItem("token", JSON.stringify(token));
+        navigate("/logged");
     } catch (error) {
+        alert("Login falhou. Verifique suas credenciais.");
       console.error("Erro ao buscar API:", error);
     }
   };
