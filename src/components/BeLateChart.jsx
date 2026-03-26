@@ -11,7 +11,7 @@ import {
   }
 function BeLateChart({ data }) {
   return (
-    <div class name="graphic-content" style={{ width: "40%", height: 300 }} >
+    <div className="graphic-content" style={{ width: "40%", height: 300 }} >
         <h3>Risco de atraso</h3>
       <ResponsiveContainer>
         <LineChart data={data}>
