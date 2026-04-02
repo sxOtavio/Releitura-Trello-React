@@ -183,7 +183,7 @@ function deleteOnClick(tasksId) {
             {" "}
             {/* Classe adicionada para limitar largura */}
             <h3>Modo de demontração</h3>
-            <h5>Não se preocupe tudo esta salvo na memoria local</h5>
+            <h5>Não se preocupe tudo está salvo na memoria local</h5>
             <button
               type="button"
               onClick={() => setIsBoardCollapsed((prev) => !prev)}
