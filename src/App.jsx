@@ -82,6 +82,7 @@ useEffect(() => {
         ),
       );
     } else {
+      
  // De uma coluna para outra----------------------------
       setColumns((prev) => {
         const sourceCol = prev.find((col) => col.id === sourceColumnId);
@@ -137,11 +138,11 @@ function deleteOnClick(tasksId) {
   }
 
   //Criando a nova tarefa ----------------------------
-  function onTaskSubmit(titulo, date, description,columnId) {
+  function onTaskSubmit(title, date, description,columnId) {
   
  //Validação dos campos
   
-    if (titulo.trim() == "" || description.trim() == "") {
+    if (title.trim() == "" || description.trim() == "") {
       return alert("Digite nos campos indicados");
     }
 
@@ -151,7 +152,7 @@ function deleteOnClick(tasksId) {
  
  const newTask = {
       id: tasks.length + 1,
-      titulo: titulo,
+      title: title,
       description: description,
       date: date,
       columnId: columnId, //parte que define de qual coluna a tarefa pertence e null ela é uma task card ainda
@@ -231,3 +232,4 @@ function deleteOnClick(tasksId) {
   );
 }
 export default App;
+    

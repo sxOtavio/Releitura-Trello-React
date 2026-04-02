@@ -19,8 +19,7 @@ function Tasks(props) {
           <button
             onClick={() => props.onTaskClick(task.id)}
             className={task.isCompleted ? "completed" : ""}
-          >
-            {task.title}
+          > 
           </button>
 
           <button onClick={() => onSeeDetailsClick(task)}>

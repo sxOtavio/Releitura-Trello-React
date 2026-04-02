@@ -7,7 +7,7 @@ function draggableTasks({ tasks, onTaskClick, deleteOnClick }) {
   const query = new URLSearchParams();
 
   function onSeeDetailsClick(tasks) {
-    query.set("titulo", tasks.title);
+    query.set("title", tasks.title);
     query.set("description", tasks.description);
     navigate(`/tasks?${query.toString()}`);
   }

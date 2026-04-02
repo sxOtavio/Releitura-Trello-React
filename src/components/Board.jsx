@@ -31,7 +31,7 @@ function Board({ columns, onDropTask, onDeleteTask, onTaskClick }) {
                     onClick={() => onTaskClick(task.id)}
                     className={task.isCompleted ? "completed" : ""}
                   >
-                    {task.titulo}
+                    {task.title}
                   </button>
                   <button onClick={() => onDeleteTask(task.id, column.id)}>
                     <Trash2Icon />
