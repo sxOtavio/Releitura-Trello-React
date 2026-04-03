@@ -68,11 +68,16 @@ useEffect(() => {
     
   //  tasks para column----------------------------
     
-      const task = tasks.find((t) => t.id === taskId);
-      if (!task) {
+      const foundTask = tasks.find((t) => t.id === taskId);
+      if (!foundTask) {
         console.log("Task not found in tasks:", taskId);
         return;
       }
+      const task = {
+        ...foundTask,
+        column_id: targetColumnId,
+        columnId: targetColumnId,
+      };
       setTasks((prev) => prev.filter((t) => t.id !== taskId));
       setColumns((prev) =>
         prev.map((col) =>
@@ -95,12 +100,17 @@ useEffect(() => {
           );
           return prev;
         }
+        const movedTask = {
+          ...task,
+          column_id: targetColumnId,
+          columnId: targetColumnId,
+        };
         return prev.map((col) => {
           if (col.id === sourceColumnId) {
             return { ...col, tasks: col.tasks.filter((t) => t.id !== taskId) };
           }
           if (col.id === targetColumnId) {
-            return { ...col, tasks: [...col.tasks, task] };
+            return { ...col, tasks: [...col.tasks, movedTask] };
           }
           return col;
         });
@@ -128,6 +138,17 @@ function onTaskClick(tasksId) {
       return tasks;
     });
     setTasks(newTask);
+
+    setColumns((prev) =>
+      prev.map((col) => ({
+        ...col,
+        tasks: col.tasks.map((task) =>
+          task.id === tasksId
+            ? { ...task, isCompleted: !task.isCompleted }
+            : task,
+        ),
+      })),
+    );
   }
 
 // Deletar tarefa do quadro kanban----------------------------
@@ -138,7 +159,7 @@ function deleteOnClick(tasksId) {
   }
 
   //Criando a nova tarefa ----------------------------
-  function onTaskSubmit(title, date, description,columnId) {
+  function onTaskSubmit(title, date, description, columnId = null) {
   
  //Validação dos campos
   
@@ -154,7 +175,9 @@ function deleteOnClick(tasksId) {
       id: tasks.length + 1,
       title: title,
       description: description,
+      due_date: date,
       date: date,
+      column_id: columnId,
       columnId: columnId, //parte que define de qual coluna a tarefa pertence e null ela é uma task card ainda
       isCompleted: false,
     };
