@@ -152,10 +152,18 @@ async function moveTask(taskId, targetColumnId) {
       column_id: columnId, //parte que define de qual coluna a tarefa pertence e null ela é uma task card ainda
       isCompleted: false,
     };
+
+    console.log("enviando para backend", newTask);
+
     //mandando informações para o backend----------------------------
     try {
       const response = await axios.post("https://releitura-trello-react-api-node.onrender.com/tasks", {
         newTask,
+        title: newTask.title,
+        description: newTask.description,
+        due_date: newTask.due_date,
+        column_id: newTask.column_id,
+        isCompleted: newTask.isCompleted,
       });
     } catch (error) {
       alert("Falha ao enviar tarefa. Verifique o log");
