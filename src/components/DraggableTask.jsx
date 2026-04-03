@@ -25,11 +25,11 @@ function draggableTasks({ tasks, onTaskClick, deleteOnClick }) {
               {task.title}
             </button>
 
-            <button onClick={() => onSeeDetailsClick(task)} onTouchStart={() => onSeeDetailsClick(task)}>
+            <button onClick={() => onSeeDetailsClick(task)}>
               <ChevronRightIcon />
             </button>
 
-            <button onClick={() => deleteOnClick(task.id)} onTouchStart={() => deleteOnClick(task.id)}>
+            <button onClick={() => deleteOnClick(task.id)}>
               <Trash2Icon />
             </button>
           </section>
