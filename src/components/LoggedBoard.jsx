@@ -52,6 +52,7 @@ function Board({
                   <div className="task-card">
                     <button
                       onClick={() => onTaskClick(task.id)}
+                      onTouchStart={() => onTaskClick(task.id)}
                       className={
                         task.isCompleted ? "completed" : ""
                       }
@@ -61,6 +62,9 @@ function Board({
 
                     <button
                       onClick={() =>
+                        onDeleteTask(task.id)
+                      }
+                      onTouchStart={() =>
                         onDeleteTask(task.id)
                       }
                     >

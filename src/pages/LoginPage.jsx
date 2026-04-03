@@ -54,7 +54,7 @@ localStorage.setItem("userToken", JSON.stringify(token));
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <button onClick={fetchToken}>Entrar</button>
+        <button onClick={fetchToken} onTouchStart={fetchToken}>Entrar</button>
         <h5>
           Pagina sem fins de uso publico <br /> Os usuarios foram adicionados
           direto no banco de dados <br />

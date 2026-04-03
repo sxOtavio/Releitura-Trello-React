@@ -29,11 +29,12 @@ function Board({ columns, onDropTask, onDeleteTask, onTaskClick }) {
                 <div className="task-card">
                   <button
                     onClick={() => onTaskClick(task.id)}
+                    onTouchStart={() => onTaskClick(task.id)}
                     className={task.isCompleted ? "completed" : ""}
                   >
                     {task.title}
                   </button>
-                  <button onClick={() => onDeleteTask(task.id, column.id)}>
+                  <button onClick={() => onDeleteTask(task.id, column.id)} onTouchStart={() => onDeleteTask(task.id, column.id)}>
                     <Trash2Icon />
                   </button>
                 </div>

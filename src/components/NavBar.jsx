@@ -18,6 +18,7 @@ function NavBar() {
       <button
         className="loginButton"
         onClick={() => {onLoginClick();}}
+        onTouchStart={() => {onLoginClick();}}
       >
         Login
       </button>
