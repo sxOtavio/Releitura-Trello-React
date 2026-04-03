@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     async function fechTasks() {
       try {
-        const response = await axios.get("http://localhost:3000/tasks");
+        const response = await axios.get("https://releitura-trello-react-api-node.onrender.com/tasks");
         console.log("Tasks recebidas:", response); // a api deve retornar uma lista de tasks
         setTasks(response.data.rows);
         console.log(response.data.rows);
@@ -88,7 +88,7 @@ async function moveTask(taskId, targetColumnId) {
 
   // atualiza banco
   try {
-    await axios.put(`http://localhost:3000/tasks/${taskId}`, {
+    await axios.put(`https://releitura-trello-react-api-node.onrender.com/tasks/${taskId}`, {
       column_id: targetColumnId,
     });
   } catch (err) {
@@ -147,7 +147,7 @@ async function moveTask(taskId, targetColumnId) {
     };
     //mandando informações para o backend----------------------------
     try {
-      const response = await axios.post("http://localhost:3000/tasks", {
+      const response = await axios.post("https://releitura-trello-react-api-node.onrender.com/tasks", {
         newTask,
       });
     } catch (error) {
