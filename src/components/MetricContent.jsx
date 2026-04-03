@@ -15,6 +15,7 @@ function MetricContent(props) {
       if (!task.due_date) return count;
 
       const taskDate = new Date(task.due_date);
+      if (task.column_id === 3) return count; // Ignora tarefas na coluna "Concluído"
       const isLate = taskDate < hoje && !task.isCompleted;
       return isLate ? count + 1 : count;
     }, 0);

@@ -121,16 +121,24 @@ async function moveTask(taskId, targetColumnId) {
     setTasks(newTask);
   }
 
-  // Deletar tarefa do quadro kanban----------------------------
+  // ============== Deletar tarefa =========================
 
-  async function deleteOnClick(tasksId) {      
-    try {
-    await axios.delete(`https://releitura-trello-react-api-node.onrender.com/tasks/${tasksId}`);
-  }
-   catch (err) {
+async function deleteOnClick(taskId) {
+  console.log("Id da task deletada", taskId);
+  try {
+    await axios.delete(
+      `https://releitura-trello-react-api-node.onrender.com/tasks/${taskId}`
+    );
+ console.log("Task deletada com sucesso do backend");
+    // remove do estado local
+    setTasks(prev =>
+      prev.filter(task => task.id !== taskId)
+    );
+
+  } catch (err) {
     console.error("Erro ao deletar task", err);
   }
-  }
+}
 
   //Criando a nova tarefa ----------------------------
   async function onTaskSubmit(title, date, description, columnId) {
@@ -145,7 +153,6 @@ async function moveTask(taskId, targetColumnId) {
     // lembrar de criar uma aba de comentarios
 
     const newTask = {
-      id: tasks.length + 1,
       title: title,
       description: description,
       due_date: date,
@@ -165,11 +172,12 @@ async function moveTask(taskId, targetColumnId) {
         column_id: newTask.column_id,
         isCompleted: newTask.isCompleted,
       });
+      setTasks(prev => [...prev, response.data]);
     } catch (error) {
       alert("Falha ao enviar tarefa. Verifique o log");
       console.error("Erro ao buscar API:", error);
     }
-    //setTasks([...tasks, newTask]);
+   
   }
 
   function onFinalDateSubmit(date) {
