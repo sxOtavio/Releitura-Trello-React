@@ -22,10 +22,11 @@ function App() {
       try {
         const response = await axios.get("https://releitura-trello-react-api-node.onrender.com/tasks");
         console.log("Tasks recebidas:", response); // a api deve retornar uma lista de tasks
-        setTasks(response.data.rows);
+        setTasks(Array.isArray(response.data.rows) ? response.data.rows : []);
         console.log(response.data.rows);
       } catch (error) {
         console.error("Erro ao buscar API:", error);
+        setTasks([]); // Define como array vazio em caso de erro
       }
     }
     fechTasks();
