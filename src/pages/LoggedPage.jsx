@@ -133,7 +133,7 @@ async function moveTask(taskId, targetColumnId) {
   }
 
   //Criando a nova tarefa ----------------------------
-  async function onTaskSubmit(title, date, description, columnId) {
+  async function onTaskSubmit(title, due_date, description, columnId) {
     //Validação dos campos
 
     if (title.trim() == "" || description.trim() == "") {
@@ -148,7 +148,7 @@ async function moveTask(taskId, targetColumnId) {
       id: tasks.length + 1,
       title: title,
       description: description,
-      due_date: date,
+      due_date: due_date,
       column_id: columnId, //parte que define de qual coluna a tarefa pertence e null ela é uma task card ainda
       isCompleted: false,
     };

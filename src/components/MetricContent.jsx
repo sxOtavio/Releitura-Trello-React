@@ -12,9 +12,9 @@ function MetricContent(props) {
     const hoje = new Date();
 
     return allTasks.reduce((count, task) => {
-      if (!task.date) return count;
+      if (!task.due_date) return count;
 
-      const taskDate = new Date(task.date);
+      const taskDate = new Date(task.due_date);
       const isLate = taskDate < hoje && !task.isCompleted;
       return isLate ? count + 1 : count;
     }, 0);
