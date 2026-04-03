@@ -12,9 +12,15 @@ import "./App.css";
 
 
 function App() {
-  const [tasks, setTasks] = useState(
-    JSON.parse(localStorage.getItem("tasks")) || [],
-  );
+  const [tasks, setTasks] = useState(() => {
+    try {
+      const savedTasks = localStorage.getItem("tasks");
+      return savedTasks ? JSON.parse(savedTasks) : [];
+    } catch (error) {
+      console.error("Erro ao carregar tasks do localStorage:", error);
+      return [];
+    }
+  });
  const [token, setToken] = useState(
   localStorage.getItem("token")
 );
@@ -38,13 +44,23 @@ useEffect(() => {
     { name: "Woodson", total: 3 },
   ];
 // Colunas do quadro kanban
-  const [columns, setColumns] = useState(
-    JSON.parse(localStorage.getItem("columns")) || [
-      { id: 1, title: "To Do", tasks: [] },
-      { id: 2, title: "Doing", tasks: [] },
-      { id: 3, title: "Done", tasks: [] },
-    ],
-  );
+  const [columns, setColumns] = useState(() => {
+    try {
+      const savedColumns = localStorage.getItem("columns");
+      return savedColumns ? JSON.parse(savedColumns) : [
+        { id: 1, title: "To Do", tasks: [] },
+        { id: 2, title: "Doing", tasks: [] },
+        { id: 3, title: "Done", tasks: [] },
+      ];
+    } catch (error) {
+      console.error("Erro ao carregar columns do localStorage:", error);
+      return [
+        { id: 1, title: "To Do", tasks: [] },
+        { id: 2, title: "Doing", tasks: [] },
+        { id: 3, title: "Done", tasks: [] },
+      ];
+    }
+  });
   const [finalDate, setFinalDate] = useState("");
   const [isBoardCollapsed, setIsBoardCollapsed] = useState(false);
   
@@ -203,7 +219,7 @@ function deleteOnClick(tasksId) {
               onFinalDateSubmit={onFinalDateSubmit}
             />
             <DraggableTask
-              tasks={tasks}
+              tasks={Array.isArray(tasks) ? tasks : []}
               onTaskClick={onTaskClick}
               deleteOnClick={deleteOnClick}
             />
@@ -215,7 +231,7 @@ function deleteOnClick(tasksId) {
               columns={columns}
             />
             <Board
-              columns={columns}
+              columns={Array.isArray(columns) ? columns : []}
               onDropTask={moveTask}
               onDeleteTask={deleteTaskFromColumn}
               onTaskClick={onTaskClick}
