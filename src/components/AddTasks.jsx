@@ -39,8 +39,8 @@ function AddTasks({ onTaskSubmit, onFinalDateSubmit }) {
       />
       <button
         className="add-tasks"
-        onClick={() => onTaskSubmit(title, date, description, null)}
-        onTouchStart={() => onTaskSubmit(title, date, description, null)}
+        onClick={() => onTaskSubmit(title, date, description)}
+        onTouchStart={() => onTaskSubmit(title, date, description)}
       >
         Adicionar
       </button>

@@ -13,7 +13,7 @@ function Board({
       {columns.map((column) => {
         //  tasks pertencentes à coluna
         const columnTasks = tasks.filter(
-          (task) => task.column_id === column.id
+          (task) => task.column_id == column.id
         );
 
         return (
