@@ -8,6 +8,7 @@ function DraggablePanel({ children, taskId, sourceColumnId }) {
       onDragStart={(e) => {
         console.log("onDragStart:", { taskId, sourceColumnId });
         e.dataTransfer.setData("taskId", taskId);
+        e.dataTransfer.setData("sourceColumnId", sourceColumnId || "");
       }}
       style={{
         cursor: "grab",
