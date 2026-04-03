@@ -172,7 +172,8 @@ async function deleteOnClick(taskId) {
         column_id: newTask.column_id,
         isCompleted: newTask.isCompleted,
       });
-      setTasks(prev => [...prev, response.data]);
+      const taskWithId = { ...newTask, id: response.data.taskId };
+      setTasks(prev => [...prev, taskWithId]);
     } catch (error) {
       alert("Falha ao enviar tarefa. Verifique o log");
       console.error("Erro ao buscar API:", error);
