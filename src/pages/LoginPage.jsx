@@ -20,7 +20,7 @@ function LoginPage() {
     // Chamada post com Axios
 
     try {
-      const response = await axios.post("http://localhost:3000/login", {
+      const response = await axios.post("https://releitura-trello-react-api-node.onrender.com/login", {
         user: user,
         password: password,
       });
