@@ -67,15 +67,17 @@ function App() {
   );
   // buscando as colunas na api -----------------------------
 
+  //============================================================
   const [finalDate, setFinalDate] = useState("");
   const [isBoardCollapsed, setIsBoardCollapsed] = useState(false);
 
-  //armazenando na api storage----------------------------
-
+ 
   useEffect(() => {
     localStorage.setItem("columns", JSON.stringify(columns));
     console.log("columns salvos no localStorage:", columns);
   }, [columns]);
+
+ //=============== mudanca de coluna // armazenando na api storage ================
 
 async function moveTask(taskId, targetColumnId) {
   // update visual imediato
@@ -87,7 +89,7 @@ async function moveTask(taskId, targetColumnId) {
     )
   );
 
-  // atualiza banco
+  //============ mudanca de coluna // atualiza banco===============
   try {
     await axios.put(`https://releitura-trello-react-api-node.onrender.com/tasks/${taskId}`, {
       column_id: targetColumnId,
@@ -121,9 +123,13 @@ async function moveTask(taskId, targetColumnId) {
 
   // Deletar tarefa do quadro kanban----------------------------
 
-  function deleteOnClick(tasksId) {
-    const newTask = tasks.filter((tasks) => tasks.id !== tasksId);
-    setTasks(newTask);
+  async function deleteOnClick(tasksId) {      
+    try {
+    await axios.delete(`https://releitura-trello-react-api-node.onrender.com/tasks/${tasksId}`);
+  }
+   catch (err) {
+    console.error("Erro ao deletar task", err);
+  }
   }
 
   //Criando a nova tarefa ----------------------------
@@ -142,7 +148,7 @@ async function moveTask(taskId, targetColumnId) {
       id: tasks.length + 1,
       title: title,
       description: description,
-      date: date,
+      due_date: date,
       column_id: columnId, //parte que define de qual coluna a tarefa pertence e null ela é uma task card ainda
       isCompleted: false,
     };
