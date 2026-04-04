@@ -22,8 +22,12 @@ function App() {
       try {
         const response = await axios.get("https://releitura-trello-react-api-node.onrender.com/tasks");
         console.log("Tasks recebidas:", response); // a api deve retornar uma lista de tasks
-        setTasks(response.data.rows);
-        console.log(response.data.rows);
+        const rows = response.data.rows.map((task) => ({
+          ...task,
+          isCompleted: task.isCompleted ?? task.iscompleted ?? task.is_completed ?? false,
+        }));
+        setTasks(rows);
+        console.log(rows);
       } catch (error) {
         console.error("Erro ao buscar API:", error);
         setTasks([]); // Define como array vazio em caso de erro
@@ -172,7 +176,10 @@ async function deleteOnClick(taskId) {
         column_id: newTask.column_id,
         isCompleted: newTask.isCompleted,
       });
-      const taskWithId = { ...newTask, id: response.data.taskId };
+      const taskWithId = {
+        ...newTask,
+        id: response.data.taskId || response.data.id,
+      };
       setTasks(prev => [...prev, taskWithId]);
     } catch (error) {
       alert("Falha ao enviar tarefa. Verifique o log");
