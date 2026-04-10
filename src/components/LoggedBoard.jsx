@@ -1,20 +1,12 @@
 import DraggablePanel from "./Draggable";
 import { Trash2Icon } from "lucide-react";
 
-function Board({
-  columns,
-  tasks,
-  onDropTask,
-  onDeleteTask,
-  onTaskClick,
-}) {
+function Board({ columns, tasks, onDropTask, onDeleteTask, onTaskClick }) {
   return (
     <div className="board">
       {columns.map((column) => {
         //  tasks pertencentes à coluna
-        const columnTasks = tasks.filter(
-          (task) => task.column_id == column.id
-        );
+        const columnTasks = tasks.filter((task) => task.column_id == column.id);
 
         return (
           <div
@@ -23,9 +15,7 @@ function Board({
             onDrop={(e) => {
               e.preventDefault();
 
-              const taskId = parseInt(
-                e.dataTransfer.getData("taskId")
-              );
+              const taskId = parseInt(e.dataTransfer.getData("taskId"));
 
               console.log("Drop:", {
                 taskId,
@@ -33,7 +23,7 @@ function Board({
               });
 
               // agora NÃO existe mais sourceColumnId
-              
+
               onDropTask(taskId, column.id);
             }}
             onDragOver={(e) => e.preventDefault()}
@@ -45,28 +35,19 @@ function Board({
               onDragOver={(e) => e.preventDefault()}
             >
               {columnTasks.map((task) => (
-                <DraggablePanel
-                  key={task.id}
-                  taskId={task.id}
-                >
+                <DraggablePanel key={task.id} taskId={task.id}>
                   <div className="task-card">
                     <button
                       onClick={() => onTaskClick(task.id)}
                       onTouchStart={() => onTaskClick(task.id)}
-                      className={
-                        task.isCompleted ? "completed" : ""
-                      }
+                      className={task.isCompleted ? "completed" : ""}
                     >
                       {task.title}
                     </button>
 
                     <button
-                      onClick={() =>
-                        onDeleteTask(task.id)
-                      }
-                      onTouchStart={() =>
-                        onDeleteTask(task.id)
-                      }
+                      onClick={() => onDeleteTask(task.id)}
+                      onTouchStart={() => onDeleteTask(task.id)}
                     >
                       <Trash2Icon />
                     </button>

@@ -1,73 +1,55 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AddTasks from "./components/AddTasks";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Board from "./components/Board";
 import DraggableTask from "./components/DraggableTask";
 import GraphicContent from "./components/BeLateChart";
+import BurndownChart from "./components/ProductivityBarChart";
 import MetricContent from "./components/MetricContent";
-import ProductivityBarChart from "./components/ProductivityBarChart";
 import { ChevronLeft } from "lucide-react";
+import { getRiskChartData, getBurndownData } from "./services/chartServices";
+import {
+  loadTasksFromStorage,
+  saveTasksToStorage,
+  loadColumnsFromStorage,
+  saveColumnsToStorage,
+} from "./services/taskServices";
 import "./App.css";
 
-
 function App() {
-  const [tasks, setTasks] = useState(
-    JSON.parse(localStorage.getItem("tasks")) || [],
-  );
- const [token, setToken] = useState(
-  localStorage.getItem("token")
-);
-useEffect(() => {
-  const savedToken = localStorage.getItem("token");
-  setToken(savedToken);
-}, []);
-  const data = [
-    { day: "Dom", tasks: 1 },
-    { day: "Seg", tasks: 3 },
-    { day: "Ter", tasks: 7 },
-    { day: "Qua", tasks: 3 },
-    { day: "Qui", tasks: 8 },
-    { day: "Sex", tasks: 2 },
-    { day: "Sab", tasks: 3 },
-  
-  ];
-  const members = [
-    { name: "Otávio", total: 5 },
-    { name: "Ana", total: 8 },
-    { name: "Woodson", total: 3 },
-  ];
-// Colunas do quadro kanban
-  const [columns, setColumns] = useState(
-    JSON.parse(localStorage.getItem("columns")) || [
-      { id: 1, title: "To Do", tasks: [] },
-      { id: 2, title: "Doing", tasks: [] },
-      { id: 3, title: "Done", tasks: [] },
-    ],
-  );
+  const [tasks, setTasks] = useState(loadTasksFromStorage());
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
+  const [showAddTask, setShowAddTask] = useState(true);
+
+  useEffect(() => {
+    const savedToken = sessionStorage.getItem("token");
+    setToken(savedToken);
+  }, []);
+
+  const riskChartData = useMemo(() => getRiskChartData(tasks), [tasks]);
+  const burndownData = useMemo(() => getBurndownData(tasks), [tasks]);
+
+  // Colunas do quadro kanban
+  const [columns, setColumns] = useState(loadColumnsFromStorage());
   const [finalDate, setFinalDate] = useState("");
   const [isBoardCollapsed, setIsBoardCollapsed] = useState(false);
-  
+
   //armazenando no local storage----------------------------
-  
-  useEffect(() => {
-    console.log("task alterado");
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    console.log("tasks salvos no localStorage:", tasks);
-  }, [tasks]);
-   
 
   useEffect(() => {
-    localStorage.setItem("columns", JSON.stringify(columns));
-    console.log("columns salvos no localStorage:", columns);
+    saveTasksToStorage(tasks);
+  }, [tasks]);
+
+  useEffect(() => {
+    saveColumnsToStorage(columns);
   }, [columns]);
 
   function moveTask(taskId, targetColumnId, sourceColumnId = null) {
     console.log("moveTask called:", { taskId, targetColumnId, sourceColumnId });
     if (sourceColumnId === null) {
-    
-  //  tasks para column----------------------------
-    
+      //  tasks para column----------------------------
+
       const foundTask = tasks.find((t) => t.id === taskId);
       if (!foundTask) {
         console.log("Task not found in tasks:", taskId);
@@ -87,8 +69,7 @@ useEffect(() => {
         ),
       );
     } else {
-      
- // De uma coluna para outra----------------------------
+      // De uma coluna para outra----------------------------
       setColumns((prev) => {
         const sourceCol = prev.find((col) => col.id === sourceColumnId);
         const task = sourceCol?.tasks.find((t) => t.id === taskId);
@@ -128,9 +109,9 @@ useEffect(() => {
     );
   }
 
-// Marcar tarefa como concluída ou não concluída----------------------------
-  
-function onTaskClick(tasksId) {
+  // Marcar tarefa como concluída ou não concluída----------------------------
+
+  function onTaskClick(tasksId) {
     const newTask = tasks.map((tasks) => {
       if (tasks.id == tasksId) {
         return { ...tasks, isCompleted: !tasks.isCompleted };
@@ -151,27 +132,26 @@ function onTaskClick(tasksId) {
     );
   }
 
-// Deletar tarefa do quadro kanban----------------------------
-  
-function deleteOnClick(tasksId) {
+  // Deletar tarefa do quadro kanban----------------------------
+
+  function deleteOnClick(tasksId) {
     const newTask = tasks.filter((tasks) => tasks.id !== tasksId);
     setTasks(newTask);
   }
 
   //Criando a nova tarefa ----------------------------
   function onTaskSubmit(title, date, description, columnId = null) {
-  
- //Validação dos campos
-  
+    //Validação dos campos
+
     if (title.trim() == "" || description.trim() == "") {
       return alert("Digite nos campos indicados");
     }
 
- //tratamento das informações
+    //tratamento das informações
 
- // lembrar de criar uma aba de comentarios
- 
- const newTask = {
+    // lembrar de criar uma aba de comentarios
+
+    const newTask = {
       id: tasks.length + 1,
       title: title,
       description: description,
@@ -193,10 +173,8 @@ function deleteOnClick(tasksId) {
     setShowAddTask(false); // Esconde o formulário após a submissão
   }
 
-
   return (
     <div>
-  
       <NavBar />
       <div className="container">
         <div className="main-conteiner">
@@ -244,8 +222,8 @@ function deleteOnClick(tasksId) {
               onTaskClick={onTaskClick}
             />
             <section className="board">
-              <GraphicContent data={data} />
-              <ProductivityBarChart data={members} />
+              <GraphicContent data={riskChartData} />
+              <BurndownChart data={burndownData} />
             </section>
           </div>
         </div>
@@ -255,4 +233,3 @@ function deleteOnClick(tasksId) {
   );
 }
 export default App;
-    

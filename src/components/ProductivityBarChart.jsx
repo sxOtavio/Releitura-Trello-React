@@ -1,39 +1,38 @@
 import {
-  BarChart,
-  Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   Tooltip,
   CartesianGrid,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from "recharts";
 
-function TasksBarChart({ data }) {
+function BurndownChart({ data }) {
   return (
     <div className="graphic-content" style={{ width: "40%", height: 300 }}>
-      <h3>Produtividade da Equipe</h3>
+      <h3>Burndown de Tarefas</h3>
 
       <ResponsiveContainer>
-        <BarChart data={data}>
+        <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
-
-          <XAxis dataKey="name" />
-          <YAxis />
-
-          <Tooltip />
-
-          <Bar
-            dataKey="total"
-            fill="#22d3ee"
-            radius={[8, 8, 0, 0]}
+          <XAxis dataKey="day" />
+          <YAxis allowDecimals={false} />
+          <Tooltip formatter={(value) => `${value} tarefas`} />
+          <Line
+            type="monotone"
+            dataKey="remaining"
+            stroke="#22d3ee"
+            strokeWidth={3}
+            dot={{ r: 4 }}
+            activeDot={{ r: 7 }}
           />
-        </BarChart>
+        </LineChart>
       </ResponsiveContainer>
-
     </div>
   );
 }
 
-export default TasksBarChart;
+export default BurndownChart;
 
 

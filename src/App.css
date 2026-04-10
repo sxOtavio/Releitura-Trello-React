@@ -1,4 +1,3 @@
-
 /* Navbar */
 .navbar {
   background-color: #026aa7;
@@ -269,14 +268,18 @@
   padding: 16px;
   text-align: center;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .column {
+  display: flex;
+  flex-direction: column;
   background-color: #f4f5f7;
   border-radius: 8px;
   padding: 16px;
   min-width: 250px;
   max-width: 250px;
+  max-height: 620px;
 }
 
 .column h3 {
@@ -290,6 +293,11 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex: 1;
+  min-height: 0;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 .metricContent {
   background-color: #f4f5f7;

@@ -8,26 +8,22 @@ function LoginPage() {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-  const [userToken, setUserToken] = useState(
-    JSON.parse(localStorage.getItem("userToken")) || [],
-  );
-
-  // Buscando token
 
   const fetchToken = async (e) => {
     e.preventDefault();
 
-    // Chamada post com Axios
-
     try {
-      const response = await axios.post("https://releitura-trello-react-api-node.onrender.com/login", {
-        user: user,
-        password: password,
-      });
+      const response = await axios.post(
+        "https://releitura-trello-react-api-node.onrender.com/login",
+        {
+          user,
+          password,
+        },
+      );
       console.log("Dados enviados:", response.data);
       const token = response.data.token; // Supondo que a API retorne um token
-localStorage.setItem("userToken", JSON.stringify(token));
-      navigate('/logged');
+      sessionStorage.setItem("token", token);
+      navigate("/logged");
     } catch (error) {
       console.error("Erro ao buscar API:", error);
     }
@@ -54,7 +50,9 @@ localStorage.setItem("userToken", JSON.stringify(token));
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <button onClick={fetchToken} onTouchStart={fetchToken}>Entrar</button>
+        <button onClick={fetchToken} onTouchStart={fetchToken}>
+          Entrar
+        </button>
         <h5>
           Pagina sem fins de uso publico <br /> Os usuarios foram adicionados
           direto no banco de dados <br />

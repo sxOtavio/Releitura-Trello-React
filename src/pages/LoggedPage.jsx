@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AddTasks from "../components/AddTasks";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -6,11 +6,19 @@ import Board from "../components/LoggedBoard";
 import DraggableTask from "../components/DraggableTask";
 import GraphicContent from "../components/BeLateChart";
 import MetricContent from "../components/MetricContent";
-import ProductivityBarChart from "../components/ProductivityBarChart";
+import BurndownChart from "../components/ProductivityBarChart";
 import { ChevronLeft } from "lucide-react";
-import axios from "axios";
+import {
+  fetchTasks,
+  createTask,
+  updateTaskColumn,
+  deleteTask,
+  loadColumnsFromStorage,
+  saveColumnsToStorage,
+} from "../services/taskServices";
+import { getRiskChartData, getBurndownData } from "../services/chartServices";
 
-function App() {
+function LoggedPage() {
   const [tasks, setTasks] = useState([]);
 
   //  parte que trata os getTasks api futuramente vou adicionar uma tecnologia que monitora as alteraçoes na
@@ -18,91 +26,61 @@ function App() {
   //tasks em tempo real
 
   useEffect(() => {
-    async function fechTasks() {
+    async function loadData() {
       try {
-        const response = await axios.get("https://releitura-trello-react-api-node.onrender.com/tasks");
-        console.log("Tasks recebidas:", response); // a api deve retornar uma lista de tasks
-        const rows = response.data.rows.map((task) => ({
-          ...task,
-          isCompleted: task.isCompleted ?? task.iscompleted ?? task.is_completed ?? false,
-        }));
+        const rows = await fetchTasks();
         setTasks(rows);
-        console.log(rows);
       } catch (error) {
         console.error("Erro ao buscar API:", error);
-        setTasks([]); // Define como array vazio em caso de erro
+        setTasks([]);
       }
     }
-    fechTasks();
+    loadData();
   }, []); // RODA SÓ UMA VEZ);
 
-  const inboxTasks = tasks.filter(
-  (task) => task.column_id == null
-);
+  const inboxTasks = tasks.filter((task) => task.column_id == null);
 
   const [token, setToken] = useState();
+  const [showAddTask, setShowAddTask] = useState(false);
   useEffect(() => {
-    const savedToken = localStorage.getItem("token");
+    const savedToken = sessionStorage.getItem("token");
     setToken(savedToken);
     console.log("token salvo");
   }, []);
 
-  const data = [
-    { day: "Dom", tasks: 1 },
-    { day: "Seg", tasks: 3 },
-    { day: "Ter", tasks: 7 },
-    { day: "Qua", tasks: 3 },
-    { day: "Qui", tasks: 8 },
-    { day: "Sex", tasks: 2 },
-    { day: "Sab", tasks: 3 },
-  ];
-  const members = [
-    { name: "Otávio", total: 5 },
-    { name: "Ana", total: 8 },
-    { name: "Woodson", total: 3 },
-  ];
+  const riskChartData = useMemo(() => getRiskChartData(tasks), [tasks]);
+  const burndownData = useMemo(() => getBurndownData(tasks), [tasks]);
+
   // Colunas do quadro kanban
-  const [columns, setColumns] = useState(
-    JSON.parse(localStorage.getItem("columns")) || [
-      { id: 1, title: "To Do" },
-      { id: 2, title: "Doing"},
-      { id: 3, title: "Done" },
-    ],
-  );
+  const [columns, setColumns] = useState(loadColumnsFromStorage());
   // buscando as colunas na api -----------------------------
 
   //============================================================
   const [finalDate, setFinalDate] = useState("");
   const [isBoardCollapsed, setIsBoardCollapsed] = useState(false);
 
- 
   useEffect(() => {
-    localStorage.setItem("columns", JSON.stringify(columns));
+    saveColumnsToStorage(columns);
     console.log("columns salvos no localStorage:", columns);
   }, [columns]);
 
- //=============== mudanca de coluna // armazenando na api storage ================
+  //=============== mudanca de coluna // armazenando na api storage ================
 
-async function moveTask(taskId, targetColumnId) {
-  // update visual imediato
-  setTasks(prev =>
-    prev.map(task =>
-      task.id === taskId
-        ? { ...task, column_id: targetColumnId }
-        : task
-    )
-  );
+  async function moveTask(taskId, targetColumnId) {
+    // update visual imediato
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId ? { ...task, column_id: targetColumnId } : task,
+      ),
+    );
 
-  //============ mudanca de coluna // atualiza banco===============
-  try {
-    await axios.put(`https://releitura-trello-react-api-node.onrender.com/tasks/${taskId}`, {
-      column_id: targetColumnId,
-    });
-  } catch (err) {
-    console.error("Erro ao mover task", err);
+    //============ mudanca de coluna // atualiza banco===============
+    try {
+      await updateTaskColumn(taskId, targetColumnId);
+    } catch (err) {
+      console.error("Erro ao mover task", err);
+    }
   }
-}
-
   function deleteTaskFromColumn(taskId, columnId) {
     setColumns((prev) =>
       prev.map((col) =>
@@ -127,22 +105,16 @@ async function moveTask(taskId, targetColumnId) {
 
   // ============== Deletar tarefa =========================
 
-async function deleteOnClick(taskId) {
-  console.log("Id da task deletada", taskId);
-  try {
-    await axios.delete(
-      `https://releitura-trello-react-api-node.onrender.com/tasks/${taskId}`
-    );
- console.log("Task deletada com sucesso do backend");
-    // remove do estado local
-    setTasks(prev =>
-      prev.filter(task => task.id !== taskId)
-    );
-
-  } catch (err) {
-    console.error("Erro ao deletar task", err);
+  async function deleteOnClick(taskId) {
+    console.log("Id da task deletada", taskId);
+    try {
+      await deleteTask(taskId);
+      console.log("Task deletada com sucesso do backend");
+      setTasks((prev) => prev.filter((task) => task.id !== taskId));
+    } catch (err) {
+      console.error("Erro ao deletar task", err);
+    }
   }
-}
 
   //Criando a nova tarefa ----------------------------
   async function onTaskSubmit(title, date, description, columnId) {
@@ -166,26 +138,13 @@ async function deleteOnClick(taskId) {
 
     console.log("enviando para backend", newTask);
 
-    //mandando informações para o backend----------------------------
     try {
-      const response = await axios.post("https://releitura-trello-react-api-node.onrender.com/tasks", {
-        newTask,
-        title: newTask.title,
-        description: newTask.description,
-        due_date: newTask.due_date,
-        column_id: newTask.column_id,
-        isCompleted: newTask.isCompleted,
-      });
-      const taskWithId = {
-        ...newTask,
-        id: response.data.taskId || response.data.id,
-      };
-      setTasks(prev => [...prev, taskWithId]);
+      const taskWithId = await createTask(newTask);
+      setTasks((prev) => [...prev, taskWithId]);
     } catch (error) {
       alert("Falha ao enviar tarefa. Verifique o log");
       console.error("Erro ao buscar API:", error);
     }
-   
   }
 
   function onFinalDateSubmit(date) {
@@ -237,16 +196,16 @@ async function deleteOnClick(taskId) {
               tasks={tasks}
               columns={columns}
             />
-              <Board
+            <Board
               columns={columns}
               tasks={tasks}
               onDropTask={moveTask}
               onDeleteTask={deleteOnClick}
               onTaskClick={onTaskClick}
-             />
+            />
             <section className="board">
-              <GraphicContent data={data} />
-              <ProductivityBarChart data={members} />
+              <GraphicContent data={riskChartData} />
+              <BurndownChart data={burndownData} />
             </section>
           </div>
         </div>
@@ -255,4 +214,4 @@ async function deleteOnClick(taskId) {
     </div>
   );
 }
-export default App;
+export default LoggedPage;
