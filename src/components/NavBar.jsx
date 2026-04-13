@@ -19,8 +19,20 @@ function NavBar() {
   return (
     <div className="navbar">
       <button onClick={onHomeClick}>Home</button>
-      <button>Quadros</button>
+      <div className="menu-item">
+        <button type="button">Quadros</button>
+        <div className="tables">
+          <button type="button">Quadro 1</button>
+          <button type="button">Quadro 2</button>
+        </div>
+      </div>
+                    <div className="menu-item">
       <button>Membros</button>
+        <div className="tables">
+          <button type="button">Membro 1</button>
+          <button type="button">Membro 2</button>
+        </div>
+      </div>
       <button>Configurações</button>
 
       <div className="loginButton"></div>
