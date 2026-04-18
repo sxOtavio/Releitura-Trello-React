@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-function NavBar() {
+function NavBar(props) {
   const navigate = useNavigate();
   const token = sessionStorage.getItem("token");
 
@@ -16,21 +16,30 @@ function NavBar() {
     navigate(`/`);
   }
 
+
   return (
-    <div className="navbar">
-      <button onClick={onHomeClick}>Home</button>
+    <div className="navbar" >
+      <button onClick={onHomeClick}>Home </button>
       <div className="menu-item">
         <button type="button">Quadros</button>
         <div className="tables">
-          <button type="button">Quadro 1</button>
-          <button type="button">Quadro 2</button>
+          <button type="button">+ Adicionar Quadro +</button>
+       {window.location.pathname === "/logged" &&
+  props.boardsData.map((board) => (
+    <button type="button" key={board.id} onClick={() => props.onBoardClick(board.id)}>
+      {board.title}
+    </button>
+  ))
+}
         </div>
       </div>
                     <div className="menu-item">
       <button>Membros</button>
         <div className="tables">
-          <button type="button">Membro 1</button>
-          <button type="button">Membro 2</button>
+          <button type="button">+ Adicionar membro +</button>
+          <button type="button">Otávio</button>
+          <button type="button">Ana</button>
+          <button type="button">Woodson</button>
         </div>
       </div>
       <button>Configurações</button>

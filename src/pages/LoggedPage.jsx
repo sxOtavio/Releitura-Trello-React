@@ -15,23 +15,51 @@ import {
   deleteTask,
   loadColumnsFromStorage,
   saveColumnsToStorage,
+  loadColumnsFromApi,
 } from "../services/taskServices";
 import { getRiskChartData, getBurndownData } from "../services/chartServices";
 
 function LoggedPage() {
-  const [tasks, setTasks] = useState([]);
-
+  const [boardsData, setBoardsData] = useState([]);
+  // ========== Dashboard fetch =========================
+  useEffect(() => {
+    async function fetchBoards() {
+      try {
+        const response = await fetch(
+          "https://releitura-trello-react-api-node.onrender.com/boards",
+        );
+        const boardsdata = await response.json();
+        console.log("Boards existentes:", boardsdata.rows);
+        setBoardsData(boardsdata.rows);
+        // Selecionar o primeiro board automaticamente
+        if (boardsdata.rows && boardsdata.rows.length > 0) {
+          setSelectedBoardId(boardsdata.rows[0].id);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar boards:", error);
+      }
+    }
+    fetchBoards();
+  }, []);
+  //========================= Seleção de Quadro ===========================
+  const [selectedBoardId, setSelectedBoardId] = useState(null);
+  function onBoardClick(boardId) {
+    console.log("Clicou no board com id:", boardId);
+    setSelectedBoardId(boardId);
+  }
+  // Aqui você pode adicionar a lógica para navegar para a página do quadro selecionado
+  //==============================
   //  parte que trata os getTasks api futuramente vou adicionar uma tecnologia que monitora as alteraçoes na
   //api e pede para atualizar sozinho assim todos os users atualizarao as
   //tasks em tempo real
-
+  const [tasks, setTasks] = useState([]);
   useEffect(() => {
     async function loadData() {
       try {
         const rows = await fetchTasks();
         setTasks(rows);
       } catch (error) {
-        console.error("Erro ao buscar API:", error);
+        console.error("Erro ao buscar tasks da API:", error);
         setTasks([]);
       }
     }
@@ -48,19 +76,49 @@ function LoggedPage() {
     console.log("token salvo");
   }, []);
 
-  const riskChartData = useMemo(() => getRiskChartData(tasks), [tasks]);
-  const burndownData = useMemo(() => getBurndownData(tasks), [tasks]);
-
   // Colunas do quadro kanban
-  const [columns, setColumns] = useState(loadColumnsFromStorage());
-  // buscando as colunas na api -----------------------------
+  const [columns, setColumns] = useState(loadColumnsFromStorage(true));
 
-  //============================================================
+  // carregando as colunas da api
+  useEffect(() => {
+    async function loadColumns() {
+      try {
+        const columnsFromApi = await loadColumnsFromApi();
+        setColumns(columnsFromApi);
+        saveColumnsToStorage(columnsFromApi, true);
+      } catch (error) {
+        console.error("Erro ao carregar colunas da API:", error);
+        setColumns(loadColumnsFromStorage(true));
+      }
+    }
+    loadColumns();
+  }, []);
+
+  // Filtrar colunas e tasks do board selecionado
+  const filteredColumns = selectedBoardId
+    ? columns.filter((col) => col.board_id === selectedBoardId)
+    : columns;
+
+  const boardTaskIds = new Set(
+    filteredColumns.flatMap((col) =>
+      tasks.filter((t) => t.column_id === col.id).map((t) => t.id),
+    ),
+  );
+
+  const boardTasks = selectedBoardId
+    ? tasks.filter((task) => boardTaskIds.has(task.id) || task.column_id === null)
+    : tasks;
+
+  const boardInboxTasks = boardTasks.filter((task) => task.column_id == null);
+
+  const riskChartData = useMemo(() => getRiskChartData(boardTasks), [boardTasks]);
+  const burndownData = useMemo(() => getBurndownData(boardTasks), [boardTasks]);
+
   const [finalDate, setFinalDate] = useState("");
   const [isBoardCollapsed, setIsBoardCollapsed] = useState(false);
 
   useEffect(() => {
-    saveColumnsToStorage(columns);
+    saveColumnsToStorage(columns, true);
     console.log("columns salvos no localStorage:", columns);
   }, [columns]);
 
@@ -158,7 +216,7 @@ function LoggedPage() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar boardsData={boardsData} onBoardClick={onBoardClick} />
       <div className="container">
         <div className="main-conteiner">
           {" "}
@@ -185,7 +243,7 @@ function LoggedPage() {
               onFinalDateSubmit={onFinalDateSubmit}
             />
             <DraggableTask
-              tasks={inboxTasks}
+              tasks={boardInboxTasks}
               onTaskClick={onTaskClick}
               deleteOnClick={deleteOnClick}
             />
@@ -193,12 +251,12 @@ function LoggedPage() {
           <div className="main-content">
             <MetricContent
               finalDate={finalDate}
-              tasks={tasks}
-              columns={columns}
+              tasks={boardTasks}
+              columns={filteredColumns}
             />
             <Board
-              columns={columns}
-              tasks={tasks}
+              columns={filteredColumns}
+              tasks={boardTasks}
               onDropTask={moveTask}
               onDeleteTask={deleteOnClick}
               onTaskClick={onTaskClick}

@@ -1,32 +1,58 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://releitura-trello-react-api-node.onrender.com/tasks";
+const API_BASE_URL =
+  "https://releitura-trello-react-api-node.onrender.com/tasks";
 
 export function parseTask(task) {
   return {
     ...task,
-    isCompleted: task.isCompleted ?? task.iscompleted ?? task.is_completed ?? false,
+    isCompleted:
+      task.isCompleted ?? task.iscompleted ?? task.is_completed ?? false,
   };
 }
 
-export function loadTasksFromStorage() {
-  return JSON.parse(localStorage.getItem("tasks")) || [];
+export function loadTasksFromStorage(useApiKey = false) {
+  const key = useApiKey ? "tasks_api" : "tasks";
+  return JSON.parse(localStorage.getItem(key)) || [];
 }
 
-export function saveTasksToStorage(tasks) {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+export function saveTasksToStorage(tasks, useApiKey = false) {
+  const key = useApiKey ? "tasks_api" : "tasks";
+  localStorage.setItem(key, JSON.stringify(tasks));
 }
 
-export function loadColumnsFromStorage() {
-  return JSON.parse(localStorage.getItem("columns")) || [
-    { id: 1, title: "To Do", tasks: [] },
-    { id: 2, title: "Doing", tasks: [] },
-    { id: 3, title: "Done", tasks: [] },
-  ];
+export function loadColumnsFromStorage(useApiKey = false) {
+  const key = useApiKey ? "columns_api" : "columns";
+  return (
+    JSON.parse(localStorage.getItem(key)) || [
+      { id: 1, title: "To Do", tasks: [] },
+      { id: 2, title: "Doing", tasks: [] },
+      { id: 3, title: "Done", tasks: [] },
+    ]
+  );
 }
 
-export function saveColumnsToStorage(columns) {
-  localStorage.setItem("columns", JSON.stringify(columns));
+export async function loadColumnsFromApi() {
+  try {
+    const response = await axios.get(
+      "https://releitura-trello-react-api-node.onrender.com/columns",
+    );
+    return (response.data.rows || []).map((col) => ({
+      id: col.column_id || col.id,
+      title: col.title,
+      position: col.position,
+      board_id: col.board_id,
+      tasks: [],
+    }));
+  } catch (error) {
+    console.error("Erro ao carregar colunas da API:", error);
+    return loadColumnsFromStorage(true);
+  }
+}
+
+export function saveColumnsToStorage(columns, useApiKey = false) {
+  const key = useApiKey ? "columns_api" : "columns";
+  localStorage.setItem(key, JSON.stringify(columns));
 }
 
 export async function fetchTasks() {
