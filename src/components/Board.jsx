@@ -5,6 +5,7 @@ function Board({ columns, onDropTask, onDeleteTask, onTaskClick }) {
   return (
     <div className="board">
       {columns.map((column) => (
+    
         <div
           key={column.id}
           className="column"
@@ -18,7 +19,9 @@ function Board({ columns, onDropTask, onDeleteTask, onTaskClick }) {
           }}
           onDragOver={(e) => e.preventDefault()}
         >
+
           <h3>{column.title}</h3>
+          
           <div className="column-tasks" onDragOver={(e) => e.preventDefault()}>
             {column.tasks.map((task) => (
               <DraggablePanel

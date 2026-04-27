@@ -32,11 +32,13 @@ export function loadColumnsFromStorage(useApiKey = false) {
   );
 }
 
-export async function loadColumnsFromApi() {
+export async function loadColumnsFromApi(boardId = null) {
   try {
-    const response = await axios.get(
-      "https://releitura-trello-react-api-node.onrender.com/columns",
-    );
+    const url = boardId
+      ? `https://releitura-trello-react-api-node.onrender.com/columns?boardId=${boardId}`
+      : "https://releitura-trello-react-api-node.onrender.com/columns";
+
+    const response = await axios.get(url);
     return (response.data.rows || []).map((col) => ({
       id: col.column_id || col.id,
       title: col.title,
@@ -55,8 +57,9 @@ export function saveColumnsToStorage(columns, useApiKey = false) {
   localStorage.setItem(key, JSON.stringify(columns));
 }
 
-export async function fetchTasks() {
-  const response = await axios.get(API_BASE_URL);
+export async function fetchTasks(boardId = null) {
+  const url = boardId ? `${API_BASE_URL}?boardId=${boardId}` : API_BASE_URL;
+  const response = await axios.get(url);
   return (response.data.rows || []).map(parseTask);
 }
 

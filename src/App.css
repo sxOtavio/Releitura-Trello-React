@@ -78,6 +78,13 @@
 .menu-item .tables button:hover {
   background-color: #f4f5f7;
 }
+.addBoard {
+  color: #00ffdd;
+}
+.addBoard:hover {
+  background-color: #132a7e;
+  color: #66b6ab;
+}
 
 .loginButton {
   margin-left: auto; /* Empurra para a direita */
