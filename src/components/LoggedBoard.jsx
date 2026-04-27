@@ -1,6 +1,7 @@
 import DraggablePanel from "./Draggable";
 import { Trash2Icon, CirclePlus } from "lucide-react";
 
+const API_URL = "https://releitura-trello-react-api-node.onrender.com";
 function Board(props) {
   const {
     columns,
