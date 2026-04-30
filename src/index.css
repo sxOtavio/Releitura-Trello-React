@@ -1,11 +1,41 @@
-/* Reset básico */
-* {
+/* global.css - variáveis e reset básico */
+:root {
+  /* Cores principais */
+  --primary-bg: #a6f6af;        /* fundo suave da home/login */
+  --primary-light: #c8e6d9;
+  --primary-dark: #2c7a5e;      /* verde escuro (botões, bordas ativas) */
+  --primary-hover: #1f5e48;
   
+  /* Cores de superfície */
+  --card-bg: #ffffff;
+  --surface-bg: #f4f5f7;        /* fundo de colunas, add-tasks */
+  --navbar-bg: #7ef38b;          /* verde mais vivo para navbar (mantivemos o original) */
+  --navbar-hover: #75e482;
+  
+  /* Tons de texto */
+  --text-primary: #172b4d;
+  --text-secondary: #5e6c84;
+  --text-white: #ffffff;
+  
+  /* Bordas e sombras */
+  --border-color: #dfe1e6;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  
+  /* Layout */
+  --navbar-height: 48px;
+  --footer-height: 40px;
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--text-primary);
 }

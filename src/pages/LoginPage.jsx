@@ -32,7 +32,7 @@ function LoginPage() {
   return (
     <section className="page">
       <div className="LoginContainer">
-        <h1>R-Trello</h1>
+        <h1>KanBunny</h1>
         <h3>Login</h3>
         <input
           type="text"
@@ -53,14 +53,9 @@ function LoginPage() {
         <button onClick={fetchToken} onTouchStart={fetchToken}>
           Entrar
         </button>
-        <h5>
-          Pagina sem fins de uso publico <br /> Os usuarios foram adicionados
-          direto no banco de dados <br />
-          ## NÃO POSSUIMOS ROTA DE CADASTRO ##
-          <br />
-          Login:admin
-          <br /> Senha:admin
-        </h5>
+        <p>Não tem uma conta? <a href="/register">Registrar</a></p>
+        <p>Esqueceu a senha? <a href="/reset-password">Redefinir senha</a></p>
+        <p>Acessar <a href="/local-app">trial do App</a></p>
       </div>
     </section>
   );
