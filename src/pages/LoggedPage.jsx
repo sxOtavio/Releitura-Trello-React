@@ -16,6 +16,7 @@ function LoggedPage() {
     selectedBoardId,
     setSelectedBoardId,
     tasks,
+    toggleTask,
     columns,
     inboxTasks,
     loading,
@@ -53,14 +54,6 @@ function LoggedPage() {
     setShowAddTask(false);
   };
 
-  const onTaskClick = (taskId) => {
-    // Marcar/desmarcar completed – você pode mover essa lógica para o hook se quiser
-    // Por enquanto, farei localmente (ou pode criar um método toggleTask no hook)
-    // Mas como a task tem isCompleted, vamos atualizar localmente?
-    // Idealmente, isso seria uma chamada à API (updateTask). Vou deixar como exemplo simples.
-    // Na prática, crie um método updateTask no hook.
-    console.log("Toggle complete não implementado via API ainda");
-  };
 
   if (loading && !boards.length) {
     return <div>Carregando...</div>;
@@ -97,7 +90,7 @@ function LoggedPage() {
             />
             <DraggableTask
               tasks={inboxTasks}
-              onTaskClick={onTaskClick}
+              onTaskClick={toggleTask}
               deleteOnClick={removeTask}
             />
           </div>
@@ -113,7 +106,7 @@ function LoggedPage() {
               tasks={tasks}
               onDropTask={moveTask}
               onDeleteTask={removeTask}
-              onTaskClick={onTaskClick}
+              onTaskClick={toggleTask}
               boardId={selectedBoardId}
               refreshBoard={reload}
             />

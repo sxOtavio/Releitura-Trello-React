@@ -86,3 +86,16 @@ export async function updateTaskColumn(taskId, column_id) {
 export async function deleteTask(taskId) {
   await axios.delete(`${API_BASE_URL}/${taskId}`);
 }
+export async function updateTask(taskId, updates) {
+  const token = sessionStorage.getItem("token");
+  const response = await fetch(`https://releitura-trello-react-api-node.onrender.com/tasks/${taskId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(updates),
+  });
+  if (!response.ok) throw new Error("Erro ao atualizar task");
+  return await response.json();
+}

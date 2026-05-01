@@ -1,12 +1,12 @@
-const API_BASE = "https://releitura-trello-react-api-node.onrender.com";
+const API_BASE_URL = "https://releitura-trello-react-api-node.onrender.com";
 
 export async function registerUser(userData) {
-  const response = await fetch(`${API_BASE}/register`, {
+  const response = await fetch(`${API_BASE_URL}/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
   });
-
+  console.log("User data sent:", userData);
   const data = await response.json();
   if (!response.ok) {
     throw new Error(data.message || "Erro ao cadastrar usuário");
@@ -15,7 +15,7 @@ export async function registerUser(userData) {
 }
 
 export async function loginUser(credentials) {
-  const response = await fetch(`${API_BASE}/login`, {
+  const response = await fetch(`${API_BASE_URL}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
