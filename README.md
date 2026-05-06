@@ -1,153 +1,112 @@
- Kanban Productivity Dashboard (React)
 
-Projeto de um sistema Kanban desenvolvido em **React.js**, criado com o objetivo de praticar organização de tarefas, gerenciamento de estado e visualização de produtividade através de gráficos.
+# 🐰 KanBunny (Releitura do Trello)
 
-A ideia foi construir algo inspirado em ferramentas reais de gestão, permitindo mover tarefas entre colunas, acompanhar métricas e visualizar o fluxo de trabalho de forma simples e interativa.
-
->  Futuramente o projeto será evoluído para utilizar uma **API RESTful** com backend em **Python**.
+Uma aplicação web inspirada no Trello para gerenciamento de tarefas utilizando o modelo Kanban.  
+Este projeto foi desenvolvido com foco em prática de arquitetura frontend moderna, organização de estado e experiência do usuário.
 
 ---
 
-##  Demonstração
+# Sobre o projeto
 
-O sistema possui:
+O **KanBunny** é uma releitura do Trello que permite organizar tarefas em colunas (boards), simulando um fluxo de trabalho visual.
 
-- Inbox para criação de tarefas
-- Board Kanban (**To Do / Doing / Done**)
-- Métricas de produtividade
-- Gráficos analíticos
-- Persistência automática usando LocalStorage
+A aplicação foi construída com React e tem como objetivo demonstrar:
 
----
-
-##  Funcionalidades
-
-### Gerenciamento de tarefas
-- Criar tarefas com título, descrição e data
-- Marcar tarefas como concluídas
-- Excluir tarefas
-- Validação básica dos campos
-
-### Kanban Board
-- Colunas:
-  - To Do
-  - Doing
-  - Done
-- Movimentação de tarefas entre colunas
-- Drag and Drop personalizado
-
-### Métricas e Analytics
-- Indicadores simples de produtividade
-- Visualização gráfica do desempenho
-- Dashboard integrado ao board
-
-### Persistência de dados
-Os dados são salvos automaticamente no navegador utilizando:
-
-
-localStorage
-
-
-Assim, as tarefas continuam disponíveis mesmo após recarregar a página.
-
-*(Planejado: migração para API RESTful)*
+- Organização de componentes
+- Gerenciamento de estado
+- Interações com API
+- Interface moderna e responsiva
 
 ---
 
-##  Componentes principais
+# Funcionalidades
 
-| Componente | Função |
-|---|---|
-| NavBar | Barra de navegação |
-| AddTasks | Criação de tarefas |
-| DraggableTask | Lista de tarefas arrastáveis |
-| Board | Estrutura do Kanban |
-| MetricContent | Métricas |
-| GraphicContent | Gráficos |
-| ProductivityBarChart | Gráfico de barras |
-| Footer | Rodapé |
+-  Criação e visualização de tarefas
+-  Organização em colunas (To Do, Doing, Done)
+-  Drag and Drop entre colunas
+-  Atualização dinâmica do estado
+-  Interface estilizada e responsiva
 
 ---
 
-##  Tecnologias utilizadas
+# Tecnologias utilizadas
 
-- React.js (Hooks)
+- React
 - JavaScript (ES6+)
-- CSS3
-- Recharts (gráficos)
-- LocalStorage API *(temporário)*
+- CSS / Styled Components
+- Node.js (caso utilize API)
+- PostgreSQL / MongoDB 
 
 ---
 
-##  Estrutura do projeto
+# Estrutura do projeto
 
 
 src/
-│
 ├── components/
-│ ├── AddTasks.jsx
-│ ├── Board.jsx
-│ ├── DraggableTask.jsx
-│ ├── MetricContent.jsx
-│ ├── BeLateChart.jsx
-│ ├── ProductivityBarChart.jsx
-│ ├── NavBar.jsx
-│ └── Footer.jsx
-│
-├── App.jsx
-└── App.css
+├── pages/
+├── services/
+├── hooks/
+├── styles/
+└── App.jsx
 
+
+> Estrutura organizada visando escalabilidade e separação de responsabilidades.
 
 ---
 
-##  Fluxo da aplicação
+##  Como rodar o projeto
 
-1. Usuário cria uma tarefa na Inbox  
-2. A tarefa é armazenada no estado global (`useState`)  
-3. Os dados são persistidos no `localStorage`  
-4. A tarefa pode ser movida entre colunas via drag & drop  
-5. Métricas e gráficos refletem o progresso
+### Pré-requisitos
 
----
-##  Este projeto foi criado para praticar:
+- Node.js instalado
+- npm ou yarn
 
-Arquitetura baseada em componentes com React
+_________________________________________________________________
 
-Gerenciamento de estado
+## Rodando repositório 
 
-Drag & Drop
+# Clone o repositório
+git clone https://github.com/sxOtavio/Releitura-Trello-React.git
 
-Conceitos de Kanban
+# Acesse a pasta
+cd Releitura-Trello-React
 
-Construção de dashboards com gráficos
-
- Melhorias futuras
-
-API RESTful
-
-Backend em Python
-
-Autenticação de usuários
-
-Banco de dados (MongoDB/PostgreSQL)
-
-Métricas avançadas (CFD e Burn Down Chart)
-
-Atualização em tempo real
-
-##  Como executar
-
-```bash
-git clone <url-do-repositorio>
+# Instale as dependências
 npm install
-npm run dev
 
-ou
-
+# Rode o projeto
 npm start
 
+A aplicação estará disponível em:
+
+  http://localhost:3000
+ Deploy
+
+  https://releitura-trello-react.vercel.app/
+ Preview
+
+
+ Objetivo do projeto
+
+Este projeto foi desenvolvido com foco em:
+
+Prática de desenvolvimento frontend
+Construção de aplicações interativas
+Simulação de um sistema real de produtividade
+Evolução como desenvolvedor fullstack
+
+ Melhorias futuras
+Autenticação de usuários
+Persistência de dados real (backend)
+Compartilhamento de boards
+Responsividade mobile aprimorada
+Testes automatizados
 
 
  Autor
 
-Projeto desenvolvido como parte dos meus estudos e portfólio em desenvolvimento web.
+Desenvolvido por Otávio Ximenes
+
+GitHub: https://github.com/sxOtavio
+LinkedIn: https://www.linkedin.com/in/ot%C3%A1vio-de-siqueira-ximenes-669483232?trk=contact-info
