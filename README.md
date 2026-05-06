@@ -42,18 +42,16 @@ A aplicação foi construída com React e tem como objetivo demonstrar:
 # Estrutura do projeto
 
 
-src/
-├── components/
-├── pages/
-├── services/
-├── hooks/
-├── styles/
-└── App.jsx
+    src/
+     ├── components/
+     ├── pages/
+     ├── services/
+     ├── hooks/
+     ├── styles/
+     └── App.jsx
 
 
 > Estrutura organizada visando escalabilidade e separação de responsabilidades.
-
----
 
 ##  Como rodar o projeto
 
