@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL =
-  "https://releitura-trello-react-api-node.onrender.com/tasks";
+
+const API_BASE_URL ="https://otaviosx.cheetah-bull.ts.net/api/tasks";
 
 export function parseTask(task) {
   return {
@@ -35,8 +35,8 @@ export function loadColumnsFromStorage(useApiKey = false) {
 export async function loadColumnsFromApi(boardId = null) {
   try {
     const url = boardId
-      ? `https://releitura-trello-react-api-node.onrender.com/columns?boardId=${boardId}`
-      : "https://releitura-trello-react-api-node.onrender.com/columns";
+      ? `https://otaviosx.cheetah-bull.ts.net/api/columns?boardId=${boardId}`
+      : "https://otaviosx.cheetah-bull.ts.net/api/columns";
 
     const response = await axios.get(url);
     return (response.data.rows || []).map((col) => ({

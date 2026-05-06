@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://releitura-trello-react-api-node.onrender.com";
+const API_BASE_URL = "https://otaviosx.cheetah-bull.ts.net/api";
 
 export async function registerUser(userData) {
   const response = await fetch(`${API_BASE_URL}/register`, {

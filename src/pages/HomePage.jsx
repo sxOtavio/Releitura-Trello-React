@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./HomePage.css"; 
 import { ClipboardList, Handshake, BarChart } from "lucide-react";
-import logo from "/public/logo.png";
+import logo from "/logo.png";
 function HomePage() {
   return (
     <div className="home-container">

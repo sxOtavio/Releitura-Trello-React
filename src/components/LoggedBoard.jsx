@@ -1,5 +1,6 @@
 import DraggablePanel from "./Draggable";
 import { Trash2Icon, CirclePlus } from "lucide-react";
+import { createNewColumn, deleteColumn } from "../services/boardServices";
 
 const API_URL = "https://releitura-trello-react-api-node.onrender.com";
 function Board(props) {
@@ -13,59 +14,9 @@ function Board(props) {
     refreshBoard, 
   } = props;
 
-  // ========================
-  // CRIAR COLUMN
-  async function createNewColumn() {
-    const title = window.prompt("Digite o nome da nova column:");
-    if (!title) return;
-
-    try {
-      const response = await fetch(`${API_URL}/columns`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, board_id: boardId }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert(`Column "${data.column.title}" criada!`);
-        refreshBoard(); 
-      } else {
-        alert(data.error);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  // ========================
-  // DELETAR COLUMN
-  async function deleteColumn(columnId) {
-    try {
-      const response = await fetch(
-        `${API_URL}/columns/${columnId}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert("Column deletada!");
-        refreshBoard(); 
-      } else {
-        alert(data.error);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
   return (
     <div className="board">
-      <button onClick={createNewColumn}>
+      <button onClick={() => createNewColumn(props)}>
         <CirclePlus />
       </button>
 
@@ -106,7 +57,7 @@ function Board(props) {
               ))}
 
               {/* BOTÃO DE DELETAR COLUMN */}
-              <button onClick={() => deleteColumn(column.id)}>
+              <button onClick={() => deleteColumn(column.id, refreshBoard)}>
                 <Trash2Icon />
               </button>
             </div>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 function AddTasks({ onTaskSubmit, onFinalDateSubmit }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -7,9 +6,6 @@ function AddTasks({ onTaskSubmit, onFinalDateSubmit }) {
   const [finalDate, setFinalDate] = useState("");
   const [showFinalDateTask, setShowFinalDateTask] = useState(true);
 
-  useEffect(() => {
-    console.log("showFinalDateTask agora é:", showFinalDateTask);
-  }, [showFinalDateTask]);
   return (
     <>
       <input

@@ -22,6 +22,8 @@ function LoggedPage() {
     loading,
     riskChartData,
     burndownData,
+    finalDate,
+    onFinalDateSubmit,
     addTask,
     moveTask,
     removeTask,
@@ -29,7 +31,6 @@ function LoggedPage() {
   } = useBoard();
 
   const [showAddTask, setShowAddTask] = useState(false);
-  const [finalDate, setFinalDate] = useState("");
   const [isBoardCollapsed, setIsBoardCollapsed] = useState(false);
 
   // Callbacks específicos do componente (que dependem de UI)
@@ -46,12 +47,6 @@ function LoggedPage() {
       isCompleted: false,
     };
     await addTask(newTask);
-  };
-
-  const onFinalDateSubmit = (date) => {
-    if (!date) return;
-    setFinalDate(new Date(date).toLocaleDateString("pt-BR"));
-    setShowAddTask(false);
   };
 
 

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import { Bold } from "lucide-react";
 import axios from "axios";
+const API_BASE_URL = "https://otaviosx.cheetah-bull.ts.net/api";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function LoginPage() {
 
     try {
       const response = await axios.post(
-        "https://releitura-trello-react-api-node.onrender.com/login",
+        `${API_BASE_URL}/login`,
         {
           user,
           password,

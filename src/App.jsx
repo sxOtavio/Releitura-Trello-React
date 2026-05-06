@@ -221,10 +221,6 @@ function App() {
               onDeleteTask={deleteTaskFromColumn}
               onTaskClick={onTaskClick}
             />
-            <section className="board">
-              <GraphicContent data={riskChartData} />
-              <BurndownChart data={burndownData} />
-            </section>
           </div>
         </div>
       </div>

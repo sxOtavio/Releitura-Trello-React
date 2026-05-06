@@ -8,7 +8,7 @@ import {
   saveColumnsToStorage,
   updateTask,
 } from "../services/taskServices";
-import { fetchBoards } from "../services/boardServices";
+import { fetchBoards ,  createNewColumn , deleteColumn } from "../services/boardServices";
 import { getRiskChartData, getBurndownData } from "../services/chartServices";
 
 export function useBoard() {
@@ -17,12 +17,14 @@ export function useBoard() {
   const [tasks, setTasks] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [finalDate, setFinalDate] = useState("");
 
   const loadBoards = useCallback(async () => {
     try {
       const data = await fetchBoards();
       setBoards(data);
-      if (data.length > 0) setSelectedBoardId(data[0].id);
+      setFinalDate(new Date(data[0]?.finalDate).toLocaleDateString("pt-BR"));
+          if (data.length > 0) setSelectedBoardId(data[0].id);
     } catch (error) {
       console.error("Erro ao carregar boards:", error);
     }
@@ -133,10 +135,17 @@ export function useBoard() {
     );
   }, [tasks, filteredColumns, selectedBoardId]);
 
+  const onFinalDateSubmit = useCallback((dateValue) => {
+    if(boards[0]?.finalDate !== null){console.log("finalDate ja criada")}
+    if (!dateValue) return;
+    setFinalDate(new Date(dateValue).toLocaleDateString("pt-BR"));
+  }, []);
+
   const riskChartData = useMemo(() => getRiskChartData(boardTasks), [boardTasks]);
   const burndownData = useMemo(() => getBurndownData(boardTasks), [boardTasks]);
 
-
+   
+  
   return {
     boards,
     selectedBoardId,
@@ -147,6 +156,8 @@ export function useBoard() {
     loading,
     riskChartData,
     burndownData,
+    finalDate,
+    onFinalDateSubmit,
     addTask,
     moveTask,
     removeTask,

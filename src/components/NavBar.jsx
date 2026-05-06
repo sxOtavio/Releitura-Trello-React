@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+const API_URL = "https://otaviosx.cheetah-bull.ts.net/api";
 
-const API_URL = "https://releitura-trello-react-api-node.onrender.com";
 
 function NavBar(props) {
   const navigate = useNavigate();
