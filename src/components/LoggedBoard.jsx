@@ -1,3 +1,4 @@
+import React, { useRef } from "react";
 import DraggablePanel from "./Draggable";
 import { Trash2Icon, CirclePlus } from "lucide-react";
 import { createNewColumn, deleteColumn } from "../services/boardServices";
@@ -16,9 +17,32 @@ function Board(props) {
     onTouchDragEnd,
     touchDragTaskId,
   } = props;
+  const touchDropHandledRef = useRef(false);
+
+  const handleTouchDrop = (e) => {
+    if (!touchDragTaskId || touchDropHandledRef.current) return;
+    touchDropHandledRef.current = true;
+    const touch = e.changedTouches?.[0] || e.touches?.[0];
+    if (!touch) return;
+
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    const columnElement = element?.closest?.(".column");
+    const columnId = columnElement?.dataset?.columnId;
+
+    if (columnId) {
+      onDropTask(touchDragTaskId, Number(columnId));
+    }
+    onTouchDragEnd();
+    touchDropHandledRef.current = false;
+  };
+
+  const handleTouchCancel = () => {
+    touchDropHandledRef.current = false;
+    onTouchDragEnd();
+  };
 
   return (
-    <div className="board">
+    <div className="board" onTouchEnd={handleTouchDrop} onTouchCancel={handleTouchCancel}>
       <button onClick={() => createNewColumn(props)}>
         <CirclePlus />
       </button>
@@ -32,22 +56,13 @@ function Board(props) {
           <div
             key={column.id}
             className="column"
+            data-column-id={column.id}
             onDrop={(e) => {
               e.preventDefault();
               const taskId = parseInt(e.dataTransfer.getData("taskId"));
               onDropTask(taskId, column.id);
             }}
             onDragOver={(e) => e.preventDefault()}
-            onTouchEnd={(e) => {
-              if (touchDragTaskId) {
-                e.preventDefault();
-                onDropTask(touchDragTaskId, column.id);
-                onTouchDragEnd();
-              }
-            }}
-            onTouchCancel={() => {
-              onTouchDragEnd();
-            }}
           >
             <h3>{column.title}</h3>
 
