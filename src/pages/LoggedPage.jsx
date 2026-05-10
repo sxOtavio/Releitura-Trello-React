@@ -72,7 +72,6 @@ function LoggedPage() {
     await addTask(newTask);
   };
 
-
   if (loading && !boards.length) {
     return <div>Carregando...</div>;
   }
@@ -83,16 +82,18 @@ function LoggedPage() {
         boardsData={boards}
         onBoardClick={setSelectedBoardId}
         selectedBoardId={selectedBoardId}
-        onBoardCreated={reload}   // após criar board, recarrega a lista
+        onBoardCreated={reload} // após criar board, recarrega a lista
         refreshBoard={reload}
       />
 
       <div className="container">
         <div className="main-conteiner">
-          <div className={`main-board ${isBoardCollapsed ? "collapsed" : ""}`}
-               onDrop={handleInboxDrop}
-               onDragOver={(e) => e.preventDefault()}
-               onTouchEnd={handleInboxTouchDrop}>
+          <div
+            className={`main-board ${isBoardCollapsed ? "collapsed" : ""}`}
+            onDrop={handleInboxDrop}
+            onDragOver={(e) => e.preventDefault()}
+            onTouchEnd={handleInboxTouchDrop}
+          >
             <button
               type="button"
               onClick={() => setIsBoardCollapsed((prev) => !prev)}
@@ -100,7 +101,9 @@ function LoggedPage() {
             >
               <ChevronLeft
                 style={{
-                  transform: isBoardCollapsed ? "rotate(180deg)" : "rotate(0deg)",
+                  transform: isBoardCollapsed
+                    ? "rotate(180deg)"
+                    : "rotate(0deg)",
                 }}
               />
             </button>

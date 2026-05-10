@@ -2,7 +2,12 @@ import { ChevronRightIcon, Trash2Icon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import DraggablePanel from "./Draggable";
 
-function draggableTasks({ tasks, onTaskClick, deleteOnClick, onTouchDragStart }) {
+function draggableTasks({
+  tasks,
+  onTaskClick,
+  deleteOnClick,
+  onTouchDragStart,
+}) {
   const navigate = useNavigate();
   const query = new URLSearchParams();
 
