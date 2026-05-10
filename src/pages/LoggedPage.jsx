@@ -41,6 +41,21 @@ function LoggedPage() {
     setTouchDragTaskId(null);
   };
 
+  const handleInboxDrop = (e) => {
+    e.preventDefault();
+    const taskId = parseInt(e.dataTransfer.getData("taskId"));
+    if (taskId) {
+      moveTask(taskId, null); // null para mover para inbox
+    }
+  };
+
+  const handleInboxTouchDrop = () => {
+    if (touchDragTaskId) {
+      moveTask(touchDragTaskId, null); // null para mover para inbox
+      handleTouchDragEnd();
+    }
+  };
+
   // Callbacks específicos do componente (que dependem de UI)
   const onTaskSubmit = async (title, date, description, columnId) => {
     if (!title.trim() || !description.trim()) {
@@ -74,7 +89,10 @@ function LoggedPage() {
 
       <div className="container">
         <div className="main-conteiner">
-          <div className={`main-board ${isBoardCollapsed ? "collapsed" : ""}`}>
+          <div className={`main-board ${isBoardCollapsed ? "collapsed" : ""}`}
+               onDrop={handleInboxDrop}
+               onDragOver={(e) => e.preventDefault()}
+               onTouchEnd={handleInboxTouchDrop}>
             <button
               type="button"
               onClick={() => setIsBoardCollapsed((prev) => !prev)}
