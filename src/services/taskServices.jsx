@@ -1,7 +1,6 @@
 import axios from "axios";
 
-
-const API_BASE_URL ="https://otaviosx.cheetah-bull.ts.net/api/tasks";
+const API_BASE_URL = "https://otaviosx.cheetah-bull.ts.net/api/tasks";
 
 export function parseTask(task) {
   return {
@@ -88,7 +87,7 @@ export async function deleteTask(taskId) {
 }
 export async function updateTask(taskId, updates) {
   const token = sessionStorage.getItem("token");
-  const response = await fetch(`https://releitura-trello-react-api-node.onrender.com/tasks/${taskId}`, {
+  const response = await fetch(`${API_BASE_URL}/${taskId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
