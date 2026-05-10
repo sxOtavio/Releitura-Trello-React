@@ -19,7 +19,6 @@ function draggableTasks({ tasks, onTaskClick, deleteOnClick }) {
           <section>
             <button
               onClick={() => onTaskClick(task.id)}
-              onTouchStart={() => onTaskClick(task.id)}
               className={task.isCompleted ? "completed" : ""}
             >
               {task.title}

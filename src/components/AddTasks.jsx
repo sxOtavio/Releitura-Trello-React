@@ -37,7 +37,6 @@ function AddTasks({ onTaskSubmit, onFinalDateSubmit }) {
       <button
         className="add-tasks"
         onClick={() => onTaskSubmit(title, date, description, null)}
-        onTouchStart={() => onTaskSubmit(title, date, description, null)}
       >
         Adicionar
       </button>
@@ -52,11 +51,6 @@ function AddTasks({ onTaskSubmit, onFinalDateSubmit }) {
         <button
           className="add-tasks"
           onClick={() => {
-            onFinalDateSubmit(finalDate);
-            setShowFinalDateTask(false);
-            console.log(showFinalDateTask);
-          }}
-          onTouchStart={() => {
             onFinalDateSubmit(finalDate);
             setShowFinalDateTask(false);
             console.log(showFinalDateTask);

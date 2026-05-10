@@ -39,9 +39,10 @@ function LoginPage() {
           type="text"
           name="username"
           id="username"
-          placeholder="Usuário"
+          placeholder="E-mail"
           value={user}
           onChange={(event) => setUser(event.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && fetchToken(e)}
         />
         <input
           type="password"
@@ -50,8 +51,9 @@ function LoginPage() {
           placeholder="Senha"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && fetchToken(e)}
         />
-        <button onClick={fetchToken} onTouchStart={fetchToken}>
+        <button onClick={fetchToken} >
           Entrar
         </button>
         <p>Não tem uma conta? <a href="/register">Registrar</a></p>
