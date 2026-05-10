@@ -2,7 +2,7 @@ import { ChevronRightIcon, Trash2Icon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import DraggablePanel from "./Draggable";
 
-function draggableTasks({ tasks, onTaskClick, deleteOnClick }) {
+function draggableTasks({ tasks, onTaskClick, deleteOnClick, onTouchDragStart }) {
   const navigate = useNavigate();
   const query = new URLSearchParams();
 
@@ -15,7 +15,12 @@ function draggableTasks({ tasks, onTaskClick, deleteOnClick }) {
   return (
     <section className="task-card">
       {tasks.map((task) => (
-        <DraggablePanel key={task.id} taskId={task.id} sourceColumnId={task.column_id}>
+        <DraggablePanel
+          key={task.id}
+          taskId={task.id}
+          sourceColumnId={task.column_id}
+          onTouchDragStart={onTouchDragStart}
+        >
           <section>
             <button
               onClick={() => onTaskClick(task.id)}

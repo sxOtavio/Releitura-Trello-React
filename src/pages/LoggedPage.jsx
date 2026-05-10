@@ -30,8 +30,16 @@ function LoggedPage() {
     reload,
   } = useBoard();
 
-  const [showAddTask, setShowAddTask] = useState(false);
+  const [touchDragTaskId, setTouchDragTaskId] = useState(null);
   const [isBoardCollapsed, setIsBoardCollapsed] = useState(false);
+
+  const handleTouchDragStart = (taskId) => {
+    setTouchDragTaskId(taskId);
+  };
+
+  const handleTouchDragEnd = () => {
+    setTouchDragTaskId(null);
+  };
 
   // Callbacks específicos do componente (que dependem de UI)
   const onTaskSubmit = async (title, date, description, columnId) => {
@@ -87,6 +95,7 @@ function LoggedPage() {
               tasks={inboxTasks}
               onTaskClick={toggleTask}
               deleteOnClick={removeTask}
+              onTouchDragStart={handleTouchDragStart}
             />
           </div>
 
@@ -104,6 +113,9 @@ function LoggedPage() {
               onTaskClick={toggleTask}
               boardId={selectedBoardId}
               refreshBoard={reload}
+              onTouchDragStart={handleTouchDragStart}
+              onTouchDragEnd={handleTouchDragEnd}
+              touchDragTaskId={touchDragTaskId}
             />
             <section className="board">
               <GraphicContent data={riskChartData} />

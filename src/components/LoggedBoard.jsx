@@ -11,7 +11,10 @@ function Board(props) {
     onDeleteTask,
     onTaskClick,
     boardId,
-    refreshBoard, 
+    refreshBoard,
+    onTouchDragStart,
+    onTouchDragEnd,
+    touchDragTaskId,
   } = props;
 
   return (
@@ -35,12 +38,27 @@ function Board(props) {
               onDropTask(taskId, column.id);
             }}
             onDragOver={(e) => e.preventDefault()}
+            onTouchEnd={(e) => {
+              if (touchDragTaskId) {
+                e.preventDefault();
+                onDropTask(touchDragTaskId, column.id);
+                onTouchDragEnd();
+              }
+            }}
+            onTouchCancel={() => {
+              onTouchDragEnd();
+            }}
           >
             <h3>{column.title}</h3>
 
             <div className="column-tasks">
               {columnTasks.map((task) => (
-                <DraggablePanel key={task.id} taskId={task.id}>
+                <DraggablePanel
+                  key={task.id}
+                  taskId={task.id}
+                  sourceColumnId={column.id}
+                  onTouchDragStart={onTouchDragStart}
+                >
                   <div className="task-card">
                     <button
                       onClick={() => onTaskClick(task.id)}
