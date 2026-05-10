@@ -19,11 +19,19 @@ function Board(props) {
   } = props;
   const touchDropHandledRef = useRef(false);
 
-  const handleTouchDrop = (e, columnId) => {
+  const handleTouchDrop = (e) => {
     if (!touchDragTaskId || touchDropHandledRef.current) return;
     touchDropHandledRef.current = true;
-    e.preventDefault();
-    onDropTask(touchDragTaskId, columnId);
+    const touch = e.changedTouches?.[0] || e.touches?.[0];
+    if (!touch) return;
+
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    const columnElement = element?.closest?.(".column");
+    const columnId = columnElement?.dataset?.columnId;
+
+    if (columnId) {
+      onDropTask(touchDragTaskId, Number(columnId));
+    }
     onTouchDragEnd();
     touchDropHandledRef.current = false;
   };
@@ -34,7 +42,11 @@ function Board(props) {
   };
 
   return (
-    <div className="board">
+    <div
+      className="board"
+      onTouchEnd={handleTouchDrop}
+      onTouchCancel={handleTouchCancel}
+    >
       <button onClick={() => createNewColumn(props)}>
         <CirclePlus />
       </button>
@@ -53,7 +65,6 @@ function Board(props) {
               onDropTask(taskId, column.id);
             }}
             onDragOver={(e) => e.preventDefault()}
-            onTouchEnd={(e) => handleTouchDrop(e, column.id)}
           >
             <h3>{column.title}</h3>
 
