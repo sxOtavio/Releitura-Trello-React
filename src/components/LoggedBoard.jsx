@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import DraggablePanel from "./Draggable";
 import { Trash2Icon, CirclePlus } from "lucide-react";
 import { createNewColumn, deleteColumn } from "../services/boardServices";
@@ -47,9 +47,14 @@ function Board(props) {
       onTouchEnd={handleTouchDrop}
       onTouchCancel={handleTouchCancel}
     >
-      <button onClick={() => createNewColumn(props)}>
-        <CirclePlus />
-      </button>
+      
+      <div>
+          
+          <button onClick={() => createNewColumn(props)}>
+            <CirclePlus />
+          </button>
+      </div>
+      
 
       {columns.map((column) => {
         const columnTasks = tasks.filter((task) => task.column_id == column.id);

@@ -114,7 +114,7 @@ function NavBar(props) {
     }
 
     const userIdStr = window.prompt(
-      `Digite o ID do usuário para adicionar:\n\nUsários disponíveis:\n${allUsers.map((u) => `ID: ${u.id} - ${u.username}`).join("\n")}`,
+      `Digite o ID do usuário para adicionar:\n`,
     );
 
     if (!userIdStr) return;
@@ -263,7 +263,8 @@ function NavBar(props) {
       </div>
       <button>Configurações</button>
 
-      <div className="loginButton"></div>
+      <div className="loginButton">
+      <h3>User ID: {getUserIdFromToken()}</h3>
       <button
         className="loginButton"
         onClick={token ? onLogoutClick : onLoginClick}
@@ -271,6 +272,7 @@ function NavBar(props) {
       >
         {token ? "Logout" : "Login"}
       </button>
+      </div>
     </div>
   );
 }

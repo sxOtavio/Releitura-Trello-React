@@ -22,6 +22,7 @@ function LoginPage() {
         },
       );
       console.log("Dados enviados:", response.data);
+      sessionStorage.setItem("userId", response.data.id);
       const token = response.data.token; // Supondo que a API retorne um token
       sessionStorage.setItem("token", token);
       navigate("/logged");
