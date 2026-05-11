@@ -31,16 +31,13 @@ function DraggablePanel({
   };
 
   const handleTouchMove = (e) => {
-    if (!touchTimeout.current && !isTouchDragging.current) return;
+    if (!touchTimeout.current) return;
     const { clientX, clientY } = e.touches[0];
     const dx = Math.abs(clientX - touchStartPos.current.x);
     const dy = Math.abs(clientY - touchStartPos.current.y);
 
-    if (!isTouchDragging.current && dx + dy > 10) {
+    if (dx + dy > 10) {
       clearTouchTimeout();
-      isTouchDragging.current = true;
-      suppressClick.current = true;
-      if (onTouchDragStart) onTouchDragStart(taskId, sourceColumnId);
     }
   };
 
