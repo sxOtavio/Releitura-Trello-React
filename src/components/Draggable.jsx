@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useCallback } from "react";
 
 function DraggablePanel({
   children,
@@ -11,57 +11,67 @@ function DraggablePanel({
   const isTouchDragging = useRef(false);
   const suppressClick = useRef(false);
 
-  const clearTouchTimeout = () => {
+  const clearTouchTimeout = useCallback(() => {
     if (touchTimeout.current) {
       window.clearTimeout(touchTimeout.current);
       touchTimeout.current = null;
     }
-  };
+  }, []);
 
-  const handleTouchStart = (e) => {
-    if (e.touches.length !== 1) return;
-    const { clientX, clientY } = e.touches[0];
-    touchStartPos.current = { x: clientX, y: clientY };
+  const handleTouchStart = useCallback(
+    (e) => {
+      if (e.touches.length !== 1) return;
+      const { clientX, clientY } = e.touches[0];
+      touchStartPos.current = { x: clientX, y: clientY };
 
-    touchTimeout.current = window.setTimeout(() => {
-      isTouchDragging.current = true;
-      suppressClick.current = true;
-      if (onTouchDragStart) onTouchDragStart(taskId, sourceColumnId);
-    }, 250);
-  };
+      touchTimeout.current = window.setTimeout(() => {
+        isTouchDragging.current = true;
+        suppressClick.current = true;
+        if (onTouchDragStart) onTouchDragStart(taskId, sourceColumnId);
+      }, 10);
+    },
+    [taskId, sourceColumnId, onTouchDragStart],
+  );
 
-  const handleTouchMove = (e) => {
-    if (!touchTimeout.current) return;
-    const { clientX, clientY } = e.touches[0];
-    const dx = Math.abs(clientX - touchStartPos.current.x);
-    const dy = Math.abs(clientY - touchStartPos.current.y);
+  const handleTouchMove = useCallback(
+    (e) => {
+      if (!touchTimeout.current) return;
+      const { clientX, clientY } = e.touches[0];
+      const dx = Math.abs(clientX - touchStartPos.current.x);
+      const dy = Math.abs(clientY - touchStartPos.current.y);
 
-    if (dx + dy > 10) {
-      clearTouchTimeout();
-    }
-  };
+      if (dx + dy > 10) {
+        clearTouchTimeout();
+      }
+    },
+    [clearTouchTimeout],
+  );
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = useCallback(() => {
     clearTouchTimeout();
     isTouchDragging.current = false;
-  };
+  }, [clearTouchTimeout]);
 
-  const handleClickCapture = (e) => {
+  const handleClickCapture = useCallback((e) => {
     if (suppressClick.current) {
       e.stopPropagation();
       e.preventDefault();
       suppressClick.current = false;
     }
-  };
+  }, []);
+
+  const handleDragStart = useCallback(
+    (e) => {
+      e.dataTransfer.setData("taskId", taskId);
+      e.dataTransfer.setData("sourceColumnId", sourceColumnId || "");
+    },
+    [taskId, sourceColumnId],
+  );
 
   return (
     <div
       draggable
-      onDragStart={(e) => {
-        console.log("onDragStart:", { taskId, sourceColumnId });
-        e.dataTransfer.setData("taskId", taskId);
-        e.dataTransfer.setData("sourceColumnId", sourceColumnId || "");
-      }}
+      onDragStart={handleDragStart}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
