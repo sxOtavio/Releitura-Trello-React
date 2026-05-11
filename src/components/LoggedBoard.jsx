@@ -25,47 +25,12 @@ function Board(props) {
     const touch = e.changedTouches?.[0] || e.touches?.[0];
     if (!touch) return;
 
-    console.log("handleTouchDrop:", { touchDragTaskId, touch });
-
-    let columnElement = null;
-    
-    // Tenta o ponto exato
-    let element = document.elementFromPoint(touch.clientX, touch.clientY);
-    console.log("elementFromPoint (exato):", element);
-    columnElement = element?.closest?.(".column");
-    
-    // Se não encontrou, tenta pontos vizinhos
-    if (!columnElement) {
-      const offsets = [
-        { x: -20, y: 0 },
-        { x: 20, y: 0 },
-        { x: 0, y: -20 },
-        { x: 0, y: 20 },
-        { x: -20, y: -20 },
-        { x: 20, y: 20 },
-      ];
-      
-      for (let offset of offsets) {
-        element = document.elementFromPoint(
-          touch.clientX + offset.x,
-          touch.clientY + offset.y
-        );
-        columnElement = element?.closest?.(".column");
-        if (columnElement) {
-          console.log("elementFromPoint (offset):", element, offset);
-          break;
-        }
-      }
-    }
-    
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    const columnElement = element?.closest?.(".column");
     const columnId = columnElement?.dataset?.columnId;
-    console.log("columnId:", columnId);
 
     if (columnId) {
-      console.log("Movendo task", touchDragTaskId, "para coluna", columnId);
       onDropTask(touchDragTaskId, Number(columnId));
-    } else {
-      console.log("Nenhuma coluna encontrada");
     }
     onTouchDragEnd();
     touchDropHandledRef.current = false;
