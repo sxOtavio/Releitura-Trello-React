@@ -92,7 +92,11 @@ function LoggedPage() {
             className={`main-board ${isBoardCollapsed ? "collapsed" : ""}`}
             onDrop={handleInboxDrop}
             onDragOver={(e) => e.preventDefault()}
+            onTouchMove={(e) => {
+              if (e.cancelable) e.preventDefault();
+            }}
             onTouchEnd={handleInboxTouchDrop}
+            style={{ touchAction: "none" }}
           >
             <button
               type="button"

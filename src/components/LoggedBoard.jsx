@@ -45,7 +45,11 @@ function Board(props) {
     <div
       className="board"
       onTouchEnd={handleTouchDrop}
+      onTouchMove={(e) => {
+        if (e.cancelable) e.preventDefault();
+      }}
       onTouchCancel={handleTouchCancel}
+      style={{ touchAction: "none" }}
     >
       
       <div>

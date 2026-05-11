@@ -32,6 +32,7 @@ function DraggablePanel({
 
   const handleTouchMove = (e) => {
     if (!touchTimeout.current && !isTouchDragging.current) return;
+    if (e.cancelable) e.preventDefault();
     const { clientX, clientY } = e.touches[0];
     const dx = Math.abs(clientX - touchStartPos.current.x);
     const dy = Math.abs(clientY - touchStartPos.current.y);
