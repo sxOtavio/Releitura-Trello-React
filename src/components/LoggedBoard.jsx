@@ -68,6 +68,10 @@ function Board(props) {
             key={column.id}
             className="column"
             data-column-id={column.id}
+            onTouchEnd={handleTouchDrop}
+            onTouchMove={(e) => {
+              if (e.cancelable) e.preventDefault();
+            }}
             onDrop={(e) => {
               e.preventDefault();
               const taskId = parseInt(e.dataTransfer.getData("taskId"));
