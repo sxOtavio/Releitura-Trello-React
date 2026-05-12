@@ -3,7 +3,6 @@ import DraggablePanel from "./Draggable";
 import { Trash2Icon, CirclePlus } from "lucide-react";
 import { createNewColumn, deleteColumn } from "../services/boardServices";
 
-const API_URL = "https://releitura-trello-react-api-node.onrender.com";
 function Board(props) {
   const {
     columns,
@@ -16,21 +15,66 @@ function Board(props) {
     onTouchDragStart,
     onTouchDragEnd,
     touchDragTaskId,
+    dragInitiatorRef,
   } = props;
   const touchDropHandledRef = useRef(false);
 
   const handleTouchDrop = (e) => {
-    if (!touchDragTaskId || touchDropHandledRef.current) return;
+    console.log(
+      "LoggedBoard handleTouchDrop called, touchDragTaskId:",
+      touchDragTaskId,
+      "dragInitiator:",
+      dragInitiatorRef?.current,
+    );
+    e.stopPropagation();
+
+    // Validar se o drag foi realmente iniciado
+    if (
+      !touchDragTaskId ||
+      touchDropHandledRef.current ||
+      !dragInitiatorRef?.current
+    ) {
+      console.log(
+        "Skipping: touchDragTaskId:",
+        touchDragTaskId,
+        "handled:",
+        touchDropHandledRef.current,
+        "dragInitiator:",
+        dragInitiatorRef?.current,
+      );
+      return;
+    }
     touchDropHandledRef.current = true;
     const touch = e.changedTouches?.[0] || e.touches?.[0];
-    if (!touch) return;
+    if (!touch) {
+      console.log("No touch event");
+      onTouchDragEnd();
+      touchDropHandledRef.current = false;
+      return;
+    }
 
+    console.log("Touch position:", touch.clientX, touch.clientY);
     const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    console.log("Element at point:", element?.className);
     const columnElement = element?.closest?.(".column");
     const columnId = columnElement?.dataset?.columnId;
 
+    console.log(
+      "Column element:",
+      columnElement?.className,
+      "columnId:",
+      columnId,
+    );
     if (columnId) {
+      console.log("Moving task", touchDragTaskId, "to column", columnId);
       onDropTask(touchDragTaskId, Number(columnId));
+    } else {
+      console.log("No column found, checking if touch is on inbox");
+      const inboxElement = element?.closest?.(".main-board");
+      if (inboxElement) {
+        console.log("Touch ended on inbox, moving to inbox");
+        onDropTask(touchDragTaskId, null);
+      }
     }
     onTouchDragEnd();
     touchDropHandledRef.current = false;

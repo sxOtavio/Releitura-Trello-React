@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import AddTasks from "../components/AddTasks";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -32,13 +32,23 @@ function LoggedPage() {
 
   const [touchDragTaskId, setTouchDragTaskId] = useState(null);
   const [isBoardCollapsed, setIsBoardCollapsed] = useState(false);
+  const dragInitiatorRef = useRef(null);
 
-  const handleTouchDragStart = (taskId) => {
+  const handleTouchDragStart = (taskId, sourceColumnId) => {
+    console.log(
+      "handleTouchDragStart called with taskId:",
+      taskId,
+      "sourceColumnId:",
+      sourceColumnId,
+    );
     setTouchDragTaskId(taskId);
+    dragInitiatorRef.current = taskId;
   };
 
   const handleTouchDragEnd = () => {
+    console.log("handleTouchDragEnd called");
     setTouchDragTaskId(null);
+    dragInitiatorRef.current = null;
   };
 
   const handleInboxDrop = (e) => {
@@ -50,8 +60,24 @@ function LoggedPage() {
   };
 
   const handleInboxTouchDrop = () => {
+    console.log(
+      "handleInboxTouchDrop called with touchDragTaskId:",
+      touchDragTaskId,
+    );
+    // Verifica se o toque realmente terminou no inbox
     if (touchDragTaskId) {
-      moveTask(touchDragTaskId, null); // null para mover para inbox
+      const touch = event?.changedTouches?.[0] || event?.touches?.[0];
+      if (!touch) {
+        handleTouchDragEnd();
+        return;
+      }
+      const element = document.elementFromPoint(touch.clientX, touch.clientY);
+      const inboxElement = element?.closest?.(".main-board");
+
+      if (inboxElement) {
+        console.log("Touch ended on inbox, moving task to inbox");
+        moveTask(touchDragTaskId, null); // null para mover para inbox
+      }
       handleTouchDragEnd();
     }
   };
@@ -92,7 +118,6 @@ function LoggedPage() {
             className={`main-board ${isBoardCollapsed ? "collapsed" : ""}`}
             onDrop={handleInboxDrop}
             onDragOver={(e) => e.preventDefault()}
-            onTouchEnd={handleInboxTouchDrop}
           >
             <button
               type="button"
@@ -137,6 +162,7 @@ function LoggedPage() {
               onTouchDragStart={handleTouchDragStart}
               onTouchDragEnd={handleTouchDragEnd}
               touchDragTaskId={touchDragTaskId}
+              dragInitiatorRef={dragInitiatorRef}
             />
             <section className="board">
               <GraphicContent data={riskChartData} />
