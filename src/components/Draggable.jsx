@@ -35,7 +35,7 @@ function DraggablePanel({
           sourceColumnId,
         );
         if (onTouchDragStart) onTouchDragStart(taskId, sourceColumnId);
-      }, 150);
+      }, 220);
     },
     [taskId, sourceColumnId, onTouchDragStart],
   );

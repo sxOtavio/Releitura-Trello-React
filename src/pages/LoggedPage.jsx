@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import AddTasks from "../components/AddTasks";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -32,7 +32,6 @@ function LoggedPage() {
 
   const [touchDragTaskId, setTouchDragTaskId] = useState(null);
   const [isBoardCollapsed, setIsBoardCollapsed] = useState(false);
-  const dragInitiatorRef = useRef(null);
 
   const handleTouchDragStart = (taskId, sourceColumnId) => {
     console.log(
@@ -42,13 +41,11 @@ function LoggedPage() {
       sourceColumnId,
     );
     setTouchDragTaskId(taskId);
-    dragInitiatorRef.current = taskId;
   };
 
   const handleTouchDragEnd = () => {
     console.log("handleTouchDragEnd called");
     setTouchDragTaskId(null);
-    dragInitiatorRef.current = null;
   };
 
   const handleInboxDrop = (e) => {
@@ -162,7 +159,6 @@ function LoggedPage() {
               onTouchDragStart={handleTouchDragStart}
               onTouchDragEnd={handleTouchDragEnd}
               touchDragTaskId={touchDragTaskId}
-              dragInitiatorRef={dragInitiatorRef}
             />
             <section className="board">
               <GraphicContent data={riskChartData} />

@@ -15,7 +15,6 @@ function Board(props) {
     onTouchDragStart,
     onTouchDragEnd,
     touchDragTaskId,
-    dragInitiatorRef,
   } = props;
   const touchDropHandledRef = useRef(false);
 
@@ -23,24 +22,14 @@ function Board(props) {
     console.log(
       "LoggedBoard handleTouchDrop called, touchDragTaskId:",
       touchDragTaskId,
-      "dragInitiator:",
-      dragInitiatorRef?.current,
     );
     e.stopPropagation();
-
-    // Validar se o drag foi realmente iniciado
-    if (
-      !touchDragTaskId ||
-      touchDropHandledRef.current ||
-      !dragInitiatorRef?.current
-    ) {
+    if (!touchDragTaskId || touchDropHandledRef.current) {
       console.log(
         "Skipping: touchDragTaskId:",
         touchDragTaskId,
         "handled:",
         touchDropHandledRef.current,
-        "dragInitiator:",
-        dragInitiatorRef?.current,
       );
       return;
     }
